@@ -1961,63 +1961,130 @@ button {
   color: white;
 }
 
-/* Modern Admin Table Refinement */
-.modern-product-table {
-  width: 100%;
+/* ERP Table Design - Inspired by Reference Image */
+.erp-table-container {
   background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
 }
 
-.table-header {
-  background-color: #fcfcfd;
+.erp-table-header-bar {
+  background-color: #fcfcfc;
+  padding: 12px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
 }
 
-.table-row {
-  min-height: 72px;
-  /* Garante altura consistente */
+.erp-table-wrapper {
+  overflow-x: auto;
 }
 
-.table-row:last-child {
-  border-bottom: none;
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.modern-action-btn {
-  width: 34px;
-  height: 34px;
+.erp-table th {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0390d4;
+  /* Blue headers like image */
+  white-space: nowrap;
+}
+
+.erp-table td {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  font-size: 13px;
+  vertical-align: middle;
+  background-color: white;
+}
+
+.erp-table tr:hover td {
+  background-color: #f9f9f9;
+}
+
+/* Image box in table */
+.erp-img-box {
+  width: 50px;
+  height: 50px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
+  margin: 0 auto;
 }
 
-.modern-action-btn.edit:hover {
-  background-color: var(--primary);
+.erp-img-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Qty Badges */
+.erp-qty-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 800;
   color: white;
-  border-color: var(--primary);
-  box-shadow: 0 4px 10px rgba(0, 104, 55, 0.15);
+  min-width: 35px;
 }
 
-.modern-action-btn.delete:hover {
-  background-color: #ef4444;
+.erp-qty-badge.orange {
+  background-color: #f39c12;
+}
+
+.erp-qty-badge.green {
+  background-color: #27ae60;
+}
+
+/* Action Buttons Style */
+.erp-action-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
   color: white;
-  border-color: #ef4444;
-  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);
 }
 
-@media (max-width: 767px) {
-  .table-row {
-    grid-template-columns: 1fr !important;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    gap: 0.75rem;
-  }
+.erp-action-btn.edit {
+  background-color: #0093d1;
+  /* Blue from image */
+}
 
-  .table-header {
-    display: none !important;
-  }
+.erp-action-btn.delete {
+  background-color: #e74c3c;
+  opacity: 0.8;
+}
+
+.erp-action-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.erp-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 /* Flex Grid */
