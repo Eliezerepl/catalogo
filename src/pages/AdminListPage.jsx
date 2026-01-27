@@ -106,17 +106,17 @@ export function AdminListPage() {
                     </div>
                 ) : (
                     <div className="modern-product-table">
-                        <div className="table-header hidden md:grid grid-cols-[80px_1fr_120px_120px] gap-4 px-6 py-4 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                        <div className="table-header hidden md:grid grid-cols-[70px_1fr_120px_120px] gap-4 px-6 py-4 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                             <span>Imagem</span>
                             <span>Informações do Produto</span>
                             <span className="text-right">Preço Venda</span>
                             <span className="text-right">Ações</span>
                         </div>
                         {filteredProducts.map((p, index) => (
-                            <div key={p.id} className="table-row grid grid-cols-1 md:grid-cols-[80px_1fr_120px_120px] gap-4 px-6 py-4 items-center border-b border-gray-50 hover:bg-gray-50/50 transition-colors" style={{ animationDelay: `${index * 30}ms` }}>
+                            <div key={p.id} className="table-row grid grid-cols-1 md:grid-cols-[70px_1fr_120px_120px] gap-4 px-6 py-4 items-center border-b border-gray-50 hover:bg-gray-50/50 transition-colors" style={{ animationDelay: `${index * 30}ms` }}>
                                 {/* Imagem */}
                                 <div className="relative group mx-auto md:mx-0">
-                                    <div className="w-16 h-16 rounded-xl bg-white border border-gray-100 p-1 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+                                    <div className="w-12 h-12 rounded-lg bg-white border border-gray-100 p-0.5 flex items-center justify-center overflow-hidden shadow-sm">
                                         <img src={p.image} alt="" className="w-full h-full object-contain" />
                                     </div>
                                 </div>
@@ -127,9 +127,6 @@ export function AdminListPage() {
                                     <div className="flex items-center justify-center md:justify-start gap-2">
                                         <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-bold uppercase tracking-wider">
                                             {p.category}
-                                        </span>
-                                        <span className="text-[10px] text-gray-400 font-medium italic">
-                                            ID: #{p.id.toString().slice(-4)}
                                         </span>
                                     </div>
                                 </div>
