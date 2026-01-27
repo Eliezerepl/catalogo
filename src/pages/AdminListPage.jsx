@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Edit, Loader2, Search, Package, ArrowLeft, Plus } from 'lucide-react';
+import { Trash2, Edit, Loader2, Search, Package, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { AdminLayout } from '../components/AdminLayout';
 
 export function AdminListPage() {
     const [products, setProducts] = useState([]);
@@ -50,39 +51,24 @@ export function AdminListPage() {
     );
 
     return (
-        <div className="container py-8 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between mb-8 admin-header-row">
-                <div>
-                    <Link to="/" className="back-to-site-link mb-2">
-                        <ArrowLeft size={18} /> Voltar ao Site
-                    </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-                        <Package className="text-primary" size={32} />
-                        Consulta de Produtos
-                    </h1>
-                </div>
-                <div className="flex gap-4">
-                    <Link to="/admin/cadastro" className="btn-add px-6 py-2 rounded-full text-sm flex items-center gap-2 no-underline" style={{ width: 'auto' }}>
-                        <Plus size={18} /> Novo Produto
-                    </Link>
-                    <div className="bg-primary-light px-4 py-2 rounded-full text-primary font-bold text-sm flex items-center">
-                        {products.length} Itens no Estoque
-                    </div>
-                </div>
-            </header>
-
-            <div className="admin-glass-card">
-                <div className="admin-search-bar mb-6">
+        <AdminLayout title="Gerenciamento de Estoque">
+            <div className="flex justify-between items-center mb-6">
+                <div className="admin-search-bar !mb-0 flex-1 max-w-md">
                     <Search size={20} className="text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Pesquisar por nome ou categoria..."
+                        placeholder="Pesquisar produto..."
                         className="w-full bg-transparent outline-none"
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />
                 </div>
+                <Link to="/admin/cadastro" className="btn-add px-6 py-3 rounded-xl flex items-center gap-2 no-underline text-sm ml-4">
+                    <Plus size={20} /> Novo Produto
+                </Link>
+            </div>
 
+            <div className="admin-glass-card !bg-white !p-6">
                 {loading ? (
                     <div className="flex justify-center p-12">
                         <Loader2 className="animate-spin text-primary" size={48} />
@@ -90,7 +76,7 @@ export function AdminListPage() {
                 ) : filteredProducts.length === 0 ? (
                     <div className="text-center py-20 text-gray-400">
                         <Package size={64} className="mx-auto mb-4 opacity-20" />
-                        <p className="text-lg">Nenhum produto cadastrado.</p>
+                        <p className="text-lg">Nenhum produto encontrado.</p>
                     </div>
                 ) : (
                     <div className="products-list-grid">
@@ -120,6 +106,6 @@ export function AdminListPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </AdminLayout>
     );
 }

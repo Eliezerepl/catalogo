@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Plus, Loader2, Image as ImageIcon, Layout as LayoutIcon, ArrowLeft, RefreshCw, List } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Save, Plus, Loader2, Image as ImageIcon, RefreshCw } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { AdminLayout } from '../components/AdminLayout';
 
 export function AdminPage() {
     const { id } = useParams();
@@ -128,36 +129,22 @@ export function AdminPage() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-[60vh]">
-                <Loader2 className="animate-spin text-primary" size={48} />
-            </div>
+            <AdminLayout title="Carregando...">
+                <div className="flex justify-center items-center min-h-[40vh]">
+                    <Loader2 className="animate-spin text-primary" size={48} />
+                </div>
+            </AdminLayout>
         );
     }
 
     return (
-        <div className="container py-8 max-w-4xl mx-auto">
-            <header className="flex items-center justify-between mb-8 admin-header-row">
-                <div>
-                    <Link to="/admin/lista" className="back-to-site-link mb-2">
-                        <ArrowLeft size={18} /> Voltar para Consulta
-                    </Link>
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-                        <LayoutIcon className="text-primary" size={32} />
-                        {id ? 'Editar Produto' : 'Novo Cadastro'}
-                    </h1>
-                </div>
-                <Link to="/admin/lista" className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-bold text-sm flex items-center gap-2 no-underline">
-                    <List size={18} /> Ver Todos Produtos
-                </Link>
-            </header>
-
-            <div className="admin-glass-card">
+        <AdminLayout title={id ? 'Editar Produto' : 'Novo Cadastro'}>
+            <div className="admin-glass-card !bg-white !p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Coluna do Formulário */}
                     <div>
-                        <h2 className="admin-section-title">
+                        <h2 className="admin-section-title !mb-8">
                             {id ? <RefreshCw size={24} /> : <Plus size={24} />}
-                            <span>{id ? 'Informações do Produto' : 'Dados do Cadastro'}</span>
+                            <span>{id ? 'Editar Informações' : 'Dados do Produto'}</span>
                         </h2>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -173,7 +160,7 @@ export function AdminPage() {
                                 />
                             </div>
 
-                            <div className="form-row">
+                            <div className="grid grid-cols-2 gap-4">
                                 <div className="form-group">
                                     <label className="form-label">Categoria</label>
                                     <select
@@ -216,7 +203,7 @@ export function AdminPage() {
                                 <label className="form-label">Descrição</label>
                                 <textarea
                                     className="form-textarea"
-                                    rows="3"
+                                    rows="4"
                                     placeholder="Detalhes sobre o produto..."
                                     value={form.description}
                                     onChange={e => setForm({ ...form, description: e.target.value })}
@@ -237,19 +224,18 @@ export function AdminPage() {
                                     className="btn-add flex-1 rounded-xl shadow-lg shadow-primary/20"
                                 >
                                     {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                                    <span>{saving ? 'Salvando...' : 'Salvar Produto'}</span>
+                                    <span>{saving ? 'Salvando...' : 'Salvar Alterações'}</span>
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    {/* Coluna de Mídia/Preview */}
                     <div className="flex flex-col gap-6">
                         <div className="form-group">
-                            <label className="form-label">Mídia do Produto</label>
-                            <label className="upload-label min-h-[220px]">
+                            <label className="form-label">Imagem do Produto</label>
+                            <label className="upload-label min-h-[300px]">
                                 {form.image ? (
-                                    <img src={form.image} alt="Preview" className="w-full h-full object-contain max-h-[180px]" />
+                                    <img src={form.image} alt="Preview" className="w-full h-full object-contain max-h-[260px]" />
                                 ) : (
                                     <>
                                         <ImageIcon size={48} className="text-gray-300" />
@@ -262,7 +248,7 @@ export function AdminPage() {
                                 <input
                                     type="text"
                                     className="form-input w-full pr-10"
-                                    placeholder="Ou cole o link da imagem..."
+                                    placeholder="Link da imagem externa..."
                                     value={form.image.startsWith('data:') ? '' : form.image}
                                     onChange={e => setForm({ ...form, image: e.target.value })}
                                 />
@@ -270,17 +256,17 @@ export function AdminPage() {
                             </div>
                         </div>
 
-                        <div className="bg-primary-light p-6 rounded-2xl">
-                            <h4 className="text-primary font-bold mb-2 flex items-center gap-2">
-                                <RefreshCw size={16} /> Dica de Cadastro
+                        <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                            <h4 className="text-blue-700 font-bold mb-2 flex items-center gap-2">
+                                <RefreshCw size={16} /> Dica de Edição
                             </h4>
-                            <p className="text-primary/70 text-sm leading-relaxed">
-                                Use imagens com fundo claro ou transparente e descrições detalhadas para converter mais vendas pelo WhatsApp.
+                            <p className="text-blue-600/80 text-sm leading-relaxed">
+                                Certifique-se de que o preço está correto antes de salvar. Alterações refletem instantaneamente no catálogo do cliente.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </AdminLayout>
     );
 }

@@ -167,7 +167,7 @@ function Layout() {
 
 
       {/* Main Content */}
-      <main className="container">
+      <main className={location.pathname.startsWith('/admin') ? '' : 'container'}>
         <Outlet context={{ searchQuery, selectedCategory, setSelectedCategory }} />
       </main>
     </div>
