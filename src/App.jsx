@@ -91,10 +91,11 @@ function Layout() {
           </div>
         </>
       )}
-      {/* Header Complexo - Escondido no Login */}
-      {location.pathname !== '/login' && (
+      {/* Header Complexo - Escondido no Login e Admin */}
+      {!location.pathname.startsWith('/admin') && location.pathname !== '/login' && (
         <>
           <header className="header">
+            {/* ... (conteúdo do header existente) ... */}
             <div className="header-top">
               <div className="container header-content">
                 {/* Logo */}
@@ -102,7 +103,7 @@ function Layout() {
                   <span>bhb</span>
                 </Link>
 
-                {/* Search Bar - Only show on Home or Global? Global is fine. */}
+                {/* Search Bar */}
                 <div className="header-search">
                   <input
                     type="text"
@@ -155,7 +156,6 @@ function Layout() {
                       </span>
                     )
                   ))}
-
                 </div>
               </div>
             </div>

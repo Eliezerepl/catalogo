@@ -7,14 +7,17 @@ import {
     TrendingUp,
     Box,
     ArrowRight,
-    Search,
     ShoppingBag,
-    Users
+    LogOut,
+    ExternalLink,
+    Bell,
+    Settings as SettingsIcon
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 export function AdminDashboard() {
+    const navigate = useNavigate();
     const [stats, setStats] = useState({
         totalProducts: 0,
         categories: 0,
@@ -50,103 +53,145 @@ export function AdminDashboard() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('isAdmin');
+        navigate('/');
+    };
+
     return (
-        <div className="container py-8 max-w-6xl mx-auto">
-            <header className="mb-10">
-                <h1 className="text-4xl font-black text-gray-900 flex items-center gap-4 mb-2">
-                    <LayoutDashboard className="text-primary" size={40} />
-                    Painel Administrativo
-                </h1>
-                <p className="text-gray-500 font-medium">Bem-vindo de volta! Aqui está um resumo do seu catálogo.</p>
-            </header>
-
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="admin-stat-card">
-                    <div className="stat-icon bg-primary-light text-primary">
-                        <Package size={24} />
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-label">Total de Produtos</span>
-                        <h3 className="stat-value">{stats.totalProducts}</h3>
-                    </div>
-                    <TrendingUp className="stat-trend text-green-500" size={20} />
-                </div>
-
-                <div className="admin-stat-card">
-                    <div className="stat-icon bg-orange-100 text-orange-600">
-                        <Box size={24} />
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-label">Categorias</span>
-                        <h3 className="stat-value">{stats.categories}</h3>
+        <div className="admin-wrapper">
+            {/* Sidebar Lateral */}
+            <aside className="admin-sidebar">
+                <div className="sidebar-header">
+                    <div className="admin-logo">
+                        <LayoutDashboard size={28} />
+                        <span>ADMIN BHB</span>
                     </div>
                 </div>
 
-                <div className="admin-stat-card">
-                    <div className="stat-icon bg-blue-100 text-blue-600">
-                        <ShoppingBag size={24} />
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-label">Visualizações</span>
-                        <h3 className="stat-value">--</h3>
-                    </div>
-                </div>
-            </div>
+                <nav className="sidebar-nav">
+                    <Link to="/admin" className="nav-link active">
+                        <LayoutDashboard size={20} />
+                        Painel Geral
+                    </Link>
+                    <Link to="/admin/lista" className="nav-link">
+                        <List size={20} />
+                        Produtos
+                    </Link>
+                    <Link to="/admin/cadastro" className="nav-link">
+                        <PlusCircle size={20} />
+                        Novo Cadastro
+                    </Link>
+                    <div className="nav-divider"></div>
+                    <Link to="/" className="nav-link site-link">
+                        <ExternalLink size={20} />
+                        Ver Loja
+                    </Link>
+                </nav>
 
-            {/* Actions & Recent Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                        Ações Rápidas
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <Link to="/admin/cadastro" className="admin-action-box no-underline">
-                            <PlusCircle size={32} className="text-primary" />
-                            <div>
-                                <h4>Novo Produto</h4>
-                                <p>Cadastre um item novo no seu estoque.</p>
-                            </div>
-                        </Link>
-                        <Link to="/admin/lista" className="admin-action-box no-underline">
-                            <List size={32} className="text-orange-500" />
-                            <div>
-                                <h4>Consultar Lista</h4>
-                                <p>Gerencie seus produtos existentes.</p>
-                            </div>
-                        </Link>
-                    </div>
+                <div className="sidebar-footer">
+                    <button onClick={handleLogout} className="logout-btn">
+                        <LogOut size={20} />
+                        <span>Sair Admin</span>
+                    </button>
                 </div>
+            </aside>
 
-                <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                        Último Adicionado
-                    </h2>
-                    {loading ? (
-                        <div className="admin-glass-card h-40 flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            {/* Conteúdo Principal */}
+            <main className="admin-main">
+                <header className="admin-topbar">
+                    <div className="welcome-msg">
+                        <h2>Olá, Administrador</h2>
+                        <p>Visão geral do sistema</p>
+                    </div>
+                    <div className="topbar-actions">
+                        <button className="icon-badge-btn">
+                            <Bell size={20} />
+                            <span className="dot"></span>
+                        </button>
+                        <div className="admin-user-profile">
+                            <div className="avatar">AD</div>
                         </div>
-                    ) : stats.latestProduct ? (
-                        <div className="admin-glass-card p-6 flex items-center gap-6">
-                            <div className="w-24 h-24 bg-gray-50 rounded-2xl overflow-hidden border">
-                                <img src={stats.latestProduct.image} alt="" className="w-full h-full object-contain" />
+                    </div>
+                </header>
+
+                <div className="admin-content-inner">
+                    {/* Cards de Métricas */}
+                    <div className="dashboard-grid">
+                        <div className="admin-stat-card primary">
+                            <div className="stat-content">
+                                <span className="stat-label">Produtos Ativos</span>
+                                <h3 className="stat-value">{stats.totalProducts}</h3>
+                                <div className="stat-badge">Total Geral</div>
                             </div>
-                            <div className="flex-1">
-                                <span className="text-xs font-bold text-primary uppercase">{stats.latestProduct.category}</span>
-                                <h4 className="text-lg font-bold text-gray-900">{stats.latestProduct.name}</h4>
-                                <p className="text-xl font-black text-gray-900">R$ {stats.latestProduct.price.toFixed(2)}</p>
-                                <Link to={`/admin/editar/${stats.latestProduct.id}`} className="text-sm font-bold text-primary flex items-center gap-1 mt-2 no-underline hover:underline">
-                                    Editar Produto <ArrowRight size={14} />
+                            <Package className="stat-bg-icon" size={80} />
+                        </div>
+
+                        <div className="admin-stat-card secondary">
+                            <div className="stat-content">
+                                <span className="stat-label">Categorias</span>
+                                <h3 className="stat-value">{stats.categories}</h3>
+                                <div className="stat-badge">Segmentos</div>
+                            </div>
+                            <Box className="stat-bg-icon" size={80} />
+                        </div>
+
+                        <div className="admin-stat-card accent">
+                            <div className="stat-content">
+                                <span className="stat-label">Status do Sistema</span>
+                                <h3 className="stat-value">Ativo</h3>
+                                <div className="stat-badge">Supabase Online</div>
+                            </div>
+                            <TrendingUp className="stat-bg-icon" size={80} />
+                        </div>
+                    </div>
+
+                    {/* Ações e Último Produto */}
+                    <div className="admin-flex-grid mt-10">
+                        <div className="flex-card action-section">
+                            <h3 className="section-title">Ações Rápidas</h3>
+                            <div className="quick-actions-grid">
+                                <Link to="/admin/cadastro" className="quick-btn plus">
+                                    <PlusCircle size={40} />
+                                    <span>Cadastrar Produto</span>
+                                </Link>
+                                <Link to="/admin/lista" className="quick-btn list">
+                                    <List size={40} />
+                                    <span>Gerenciar Estoque</span>
                                 </Link>
                             </div>
                         </div>
-                    ) : (
-                        <div className="admin-glass-card p-6 text-center text-gray-400">
-                            Nenhum produto cadastrado ainda.
+
+                        <div className="flex-card recent-section">
+                            <div className="section-header">
+                                <h3 className="section-title">Recém Adicionado</h3>
+                                <Link to="/admin/lista" className="text-link">Ver lista completa</Link>
+                            </div>
+
+                            {loading ? (
+                                <div className="loading-placeholder">Carregando...</div>
+                            ) : stats.latestProduct ? (
+                                <div className="recent-product-card">
+                                    <img src={stats.latestProduct.image} alt="" />
+                                    <div className="product-details">
+                                        <span className="category-tag">{stats.latestProduct.category}</span>
+                                        <h4>{stats.latestProduct.name}</h4>
+                                        <div className="price-tag">
+                                            R$ {stats.latestProduct.price.toFixed(2)}
+                                            <small>/{stats.latestProduct.unit}</small>
+                                        </div>
+                                    </div>
+                                    <Link to={`/admin/editar/${stats.latestProduct.id}`} className="edit-circle">
+                                        <ArrowRight size={20} />
+                                    </Link>
+                                </div>
+                            ) : (
+                                <p className="empty-msg">Nenhum produto cadastrado.</p>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
-            </div>
+            </main>
         </div>
     );
 }
