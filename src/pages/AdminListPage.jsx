@@ -105,31 +105,47 @@ export function AdminListPage() {
                         <p className="text-lg">Nenhum produto encontrado.</p>
                     </div>
                 ) : (
-                    <div className="products-list-grid">
-                        <div className="hidden md:flex items-center px-4 py-2 text-xs font-bold text-gray-400 border-bottom mb-2">
-                            <span className="w-16">Foto</span>
-                            <span className="flex-1 ml-6">Produto / Categoria</span>
-                            <span className="w-24 text-right px-8">Preço</span>
-                            <span className="w-20 text-right">Ações</span>
+                    <div className="modern-product-table">
+                        <div className="table-header hidden md:grid grid-cols-[80px_1fr_120px_120px] gap-4 px-6 py-4 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                            <span>Imagem</span>
+                            <span>Informações do Produto</span>
+                            <span className="text-right">Preço Venda</span>
+                            <span className="text-right">Ações</span>
                         </div>
                         {filteredProducts.map((p, index) => (
-                            <div key={p.id} className="product-item-row animate-list-item" style={{ animationDelay: `${index * 30}ms` }}>
-                                <div className="w-12 h-12 rounded-lg bg-gray-50 flex-shrink-0 border overflow-hidden">
-                                    <img src={p.image} alt="" className="w-full h-full object-contain" />
+                            <div key={p.id} className="table-row grid grid-cols-1 md:grid-cols-[80px_1fr_120px_120px] gap-4 px-6 py-4 items-center border-b border-gray-50 hover:bg-gray-50/50 transition-colors" style={{ animationDelay: `${index * 30}ms` }}>
+                                {/* Imagem */}
+                                <div className="relative group mx-auto md:mx-0">
+                                    <div className="w-16 h-16 rounded-xl bg-white border border-gray-100 p-1 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
+                                        <img src={p.image} alt="" className="w-full h-full object-contain" />
+                                    </div>
                                 </div>
-                                <div className="flex-1 ml-4 overflow-hidden">
-                                    <h4 className="font-bold text-gray-800 text-sm truncate">{p.name}</h4>
-                                    <span className="text-[10px] text-primary font-bold uppercase tracking-wider">{p.category}</span>
+
+                                {/* Info */}
+                                <div className="flex flex-col min-w-0 text-center md:text-left">
+                                    <h4 className="font-bold text-gray-800 text-sm md:text-base truncate mb-0.5">{p.name}</h4>
+                                    <div className="flex items-center justify-center md:justify-start gap-2">
+                                        <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-bold uppercase tracking-wider">
+                                            {p.category}
+                                        </span>
+                                        <span className="text-[10px] text-gray-400 font-medium italic">
+                                            ID: #{p.id.toString().slice(-4)}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="text-right px-4 md:px-8">
-                                    <p className="font-black text-gray-900 text-sm">R$ {p.price.toFixed(2)}</p>
-                                    <p className="text-[10px] text-gray-400">por {p.unit}</p>
+
+                                {/* Preço */}
+                                <div className="text-center md:text-right">
+                                    <div className="text-sm font-black text-gray-900">R$ {p.price.toFixed(2)}</div>
+                                    <div className="text-[10px] text-gray-400 font-medium">unidade: {p.unit}</div>
                                 </div>
-                                <div className="flex gap-2">
-                                    <Link to={`/admin/editar/${p.id}`} className="btn-icon edit" title="Editar">
+
+                                {/* Ações */}
+                                <div className="flex justify-center md:justify-end gap-2">
+                                    <Link to={`/admin/editar/${p.id}`} className="modern-action-btn edit" title="Editar Produto">
                                         <Edit size={16} />
                                     </Link>
-                                    <button className="btn-icon delete" title="Excluir" onClick={() => handleDelete(p.id)}>
+                                    <button className="modern-action-btn delete" title="Excluir Produto" onClick={() => handleDelete(p.id)}>
                                         <Trash2 size={16} />
                                     </button>
                                 </div>
