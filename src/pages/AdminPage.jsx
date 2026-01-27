@@ -164,7 +164,7 @@ export function AdminPage() {
 
     return (
         <div className="container py-8 max-w-6xl mx-auto">
-            <header className="flex items-center justify-between mb-8">
+            <header className="flex items-center justify-between mb-8 admin-header-row">
                 <div>
                     <Link to="/" className="back-to-site-link mb-2">
                         <ArrowLeft size={18} /> Voltar ao Site
