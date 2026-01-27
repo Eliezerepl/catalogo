@@ -5,6 +5,7 @@ import { CartProvider, useCart } from './context/CartContext';
 import { Home } from './pages/Home';
 import { CartPage } from './pages/CartPage';
 import { AdminPage } from './pages/AdminPage';
+import { AdminListPage } from './pages/AdminListPage';
 import { LoginPage } from './pages/LoginPage';
 import { CATEGORIES } from './data';
 
@@ -189,6 +190,30 @@ function RouterWrapper() {
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Navigate to="/admin/lista" replace />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/lista"
+              element={
+                <ProtectedRoute>
+                  <AdminListPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/cadastro"
+              element={
+                <ProtectedRoute>
+                  <AdminPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/editar/:id"
               element={
                 <ProtectedRoute>
                   <AdminPage />
