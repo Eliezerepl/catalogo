@@ -244,10 +244,11 @@ export function AdminPage() {
 
                         <div className="form-group">
                             <label className="form-label">Imagem do Produto</label>
-                            <div className="flex flex-col gap-2">
-                                <label className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-all text-gray-500 font-semibold">
-                                    <ImageIcon size={20} />
-                                    {imageFile ? imageFile.name : 'Selecionar Foto'}
+                            <div className="flex flex-col gap-2 image-upload-wrapper">
+                                <label className="upload-label">
+                                    <ImageIcon size={32} />
+                                    <span className="text-sm font-bold">{imageFile ? imageFile.name : 'Subir Imagem'}</span>
+                                    <span className="text-xs text-gray-400">Arraste ou clique para selecionar</span>
                                     <input
                                         type="file"
                                         className="hidden"
@@ -255,16 +256,15 @@ export function AdminPage() {
                                         onChange={handleFileChange}
                                     />
                                 </label>
-                                <span className="text-[10px] text-gray-400 text-center">Ou cole o link abaixo</span>
-                                <div className="relative">
+                                <div className="relative mt-2">
                                     <input
                                         type="text"
                                         className="form-input w-full pr-10"
-                                        placeholder="https://..."
+                                        placeholder="Ou cole o link da imagem aqui..."
                                         value={form.image}
                                         onChange={e => {
                                             setForm({ ...form, image: e.target.value });
-                                            setImageFile(null); // Limpa o arquivo se o usuário colar um link
+                                            setImageFile(null);
                                         }}
                                     />
                                     <ImageIcon className="absolute right-3 top-3 text-gray-400" size={18} />
