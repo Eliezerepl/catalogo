@@ -107,7 +107,7 @@ export function AdminListPage() {
                                 </th>
                                 <th style={{ width: '100px' }}>Imagem</th>
                                 <th>Produto</th>
-                                <th>Modelo</th>
+                                <th>Categoria</th>
                                 <th>Preço</th>
                                 <th style={{ width: '100px' }} className="text-center">Ação</th>
                             </tr>
