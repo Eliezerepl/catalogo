@@ -233,13 +233,13 @@ export function AdminPage() {
                     <div className="flex flex-col gap-6">
                         <div className="form-group">
                             <label className="form-label">Imagem do Produto</label>
-                            <label className="upload-label min-h-[160px] !py-4">
+                            <label className="upload-label !h-28 !min-h-0 !py-2">
                                 {form.image ? (
-                                    <img src={form.image} alt="Preview" className="w-full h-full object-contain max-h-[120px]" />
+                                    <img src={form.image} alt="Preview" className="h-full w-auto object-contain max-h-24 mx-auto" />
                                 ) : (
                                     <>
-                                        <ImageIcon size={32} className="text-gray-300" />
-                                        <span className="font-bold text-sm text-gray-400">Escolher Imagem</span>
+                                        <ImageIcon size={24} className="text-gray-300" />
+                                        <span className="font-bold text-[10px] text-gray-400">Trocar Imagem</span>
                                     </>
                                 )}
                                 <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
