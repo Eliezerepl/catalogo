@@ -58,24 +58,22 @@ export function AdminListPage() {
         <AdminLayout title="Gerenciamento de Estoque">
             {/* Toolbar: Barra de Pesquisa, Filtro e Botão Novo */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-                <div className="flex flex-1 flex-col md:flex-row gap-4 w-full max-w-2xl">
-                    {/* Barra de Pesquisa */}
-                    <div className="admin-search-bar !mb-0 flex-1">
-                        <Search size={18} className="text-gray-400" />
+                <div className="flex flex-1 flex-col md:flex-row gap-3 w-full max-w-2xl">
+                    {/* Barra de Pesquisa Moderna */}
+                    <div className="modern-field search-field flex-1">
+                        <Search size={18} />
                         <input
                             type="text"
-                            placeholder="Pesquisar produto..."
-                            className="w-full bg-transparent outline-none text-sm"
+                            placeholder="O que você está procurando?"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                         />
                     </div>
 
-                    {/* Filtro de Categoria */}
-                    <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 min-w-[150px]">
-                        <Filter size={16} className="text-gray-400" />
+                    {/* Filtro de Categoria Moderno */}
+                    <div className="modern-field filter-field">
+                        <Filter size={16} />
                         <select
-                            className="bg-transparent outline-none text-sm w-full font-medium text-gray-700 cursor-pointer"
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
