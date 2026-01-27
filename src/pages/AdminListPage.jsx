@@ -84,17 +84,17 @@ export function AdminListPage() {
                     </div>
                 </div>
 
-                {/* Botão Novo Produto (Menor) */}
+                {/* Botão Novo Produto */}
                 <Link
                     to="/admin/cadastro"
-                    className="btn-add px-4 py-2 rounded-lg flex items-center gap-2 no-underline text-xs whitespace-nowrap bg-primary text-white hover:brightness-90 transition-all font-bold"
-                    style={{ height: '38px' }}
+                    className="btn-add px-6 py-2 rounded-lg flex items-center gap-2 no-underline text-xs whitespace-nowrap bg-primary text-white hover:brightness-90 transition-all font-bold shadow-sm"
+                    style={{ height: '42px' }}
                 >
-                    <Plus size={16} /> Novo Produto
+                    <Plus size={18} /> Novo Produto
                 </Link>
             </div>
 
-            <div className="admin-glass-card !bg-white !p-4">
+            <div className="admin-glass-card !bg-white !p-0 overflow-hidden">
                 {loading ? (
                     <div className="flex justify-center p-12">
                         <Loader2 className="animate-spin text-primary" size={48} />
@@ -106,45 +106,53 @@ export function AdminListPage() {
                     </div>
                 ) : (
                     <div className="modern-product-table">
-                        <div className="table-header hidden md:grid grid-cols-[50px_1fr_120px_120px] gap-4 px-6 py-4 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                        <div className="table-header hidden md:grid grid-cols-[60px_2fr_1fr_120px_100px] gap-4 px-8 py-5 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-widest items-center">
                             <span>Imagem</span>
-                            <span>Informações do Produto</span>
-                            <span className="text-right">Preço Venda</span>
+                            <span>Nome do Produto</span>
+                            <span className="text-center">Categoria</span>
+                            <span className="text-right">Preço</span>
                             <span className="text-right">Ações</span>
                         </div>
-                        {filteredProducts.map((p, index) => (
-                            <div key={p.id} className="table-row grid grid-cols-1 md:grid-cols-[50px_1fr_120px_120px] gap-4 px-6 py-4 items-center border-b border-gray-50 hover:bg-gray-50/50 transition-colors" style={{ animationDelay: `${index * 30}ms` }}>
-                                <div className="product-img-container mx-auto md:mx-0">
-                                    <img src={p.image} alt="" />
-                                </div>
+                        <div className="table-body">
+                            {filteredProducts.map((p, index) => (
+                                <div key={p.id} className="table-row grid grid-cols-1 md:grid-cols-[60px_2fr_1fr_120px_100px] gap-4 px-8 py-4 items-center border-b border-gray-50 hover:bg-gray-50/80 transition-all cursor-default" style={{ animationDelay: `${index * 30}ms` }}>
+                                    {/* Imagem */}
+                                    <div className="flex justify-center md:justify-start">
+                                        <div className="product-img-container shadow-sm border-gray-100">
+                                            <img src={p.image} alt={p.name} />
+                                        </div>
+                                    </div>
 
-                                {/* Info */}
-                                <div className="flex flex-col min-w-0 text-center md:text-left">
-                                    <h4 className="font-bold text-gray-800 text-sm md:text-base truncate mb-0.5">{p.name}</h4>
-                                    <div className="flex items-center justify-center md:justify-start gap-2">
-                                        <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-bold uppercase tracking-wider">
+                                    {/* Nome */}
+                                    <div className="text-center md:text-left">
+                                        <h4 className="font-bold text-gray-800 text-sm md:text-base truncate">{p.name}</h4>
+                                    </div>
+
+                                    {/* Categoria Centralizada */}
+                                    <div className="flex justify-center items-center">
+                                        <span className="px-3 py-1 rounded-full bg-primary-light text-primary text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
                                             {p.category}
                                         </span>
                                     </div>
-                                </div>
 
-                                {/* Preço */}
-                                <div className="text-center md:text-right">
-                                    <div className="text-sm font-black text-gray-900">R$ {p.price.toFixed(2)}</div>
-                                    <div className="text-[10px] text-gray-400 font-medium">unidade: {p.unit}</div>
-                                </div>
+                                    {/* Preço Alinhado à Direita */}
+                                    <div className="text-center md:text-right flex flex-col items-center md:items-end">
+                                        <div className="text-sm font-black text-gray-900">R$ {p.price.toFixed(2)}</div>
+                                        <div className="text-[10px] text-gray-400 font-medium">{p.unit}</div>
+                                    </div>
 
-                                {/* Ações */}
-                                <div className="flex justify-center md:justify-end gap-2">
-                                    <Link to={`/admin/editar/${p.id}`} className="modern-action-btn edit" title="Editar Produto">
-                                        <Edit size={16} />
-                                    </Link>
-                                    <button className="modern-action-btn delete" title="Excluir Produto" onClick={() => handleDelete(p.id)}>
-                                        <Trash2 size={16} />
-                                    </button>
+                                    {/* Ações Alinhadas à Direita */}
+                                    <div className="flex justify-center md:justify-end gap-3">
+                                        <Link to={`/admin/editar/${p.id}`} className="modern-action-btn edit" title="Editar">
+                                            <Edit size={16} />
+                                        </Link>
+                                        <button className="modern-action-btn delete" title="Excluir" onClick={() => handleDelete(p.id)}>
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
