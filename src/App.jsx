@@ -4,6 +4,7 @@ import { ShoppingCart, Search, Menu, HelpCircle, User, Star, X, Plus, Minus, Tra
 import { CartProvider, useCart } from './context/CartContext';
 import { Home } from './pages/Home';
 import { CartPage } from './pages/CartPage';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminPage } from './pages/AdminPage';
 import { AdminListPage } from './pages/AdminListPage';
 import { LoginPage } from './pages/LoginPage';
@@ -192,7 +193,7 @@ function RouterWrapper() {
               path="/admin"
               element={
                 <ProtectedRoute>
-                  <Navigate to="/admin/lista" replace />
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />

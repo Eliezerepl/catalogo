@@ -1508,6 +1508,94 @@ button {
   transform: scale(1.1);
 }
 
+/* --- Admin Dashboard --- */
+.admin-stat-card {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-light);
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+.stat-trend {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.admin-action-box {
+  background: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.admin-action-box:hover {
+  border-color: var(--primary);
+  background: linear-gradient(to bottom right, #ffffff, #f0fdf4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 104, 55, 0.1);
+}
+
+.admin-action-box h4 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.admin-action-box p {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
 /* --- Admin Dedicated List Page --- */
 .products-list-grid {
   display: flex;
