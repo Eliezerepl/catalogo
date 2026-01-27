@@ -162,11 +162,7 @@ function Layout() {
       )}
 
       {/* Hero Banner - Show only on Home Page */}
-      {location.pathname === '/' && (
-        <div className="hero-banner">
-          {/* Banner content */}
-        </div>
-      )}
+
 
       {/* Main Content */}
       <main className="container">
