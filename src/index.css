@@ -1839,48 +1839,43 @@ button {
 .product-item-row {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.25rem;
+  padding: 0.5rem 1rem;
   background: white;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1px solid #f1f5f9;
   transition: all 0.2s ease;
 }
 
-.product-item-row:hover {
-  border-color: var(--primary);
-  background-color: #f0fdf4;
-  transform: translateX(5px);
-}
-
 .product-item-row img {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
 }
 
 .product-item-row h4 {
-  font-size: 0.95rem;
-  margin-bottom: 0.1rem;
-}
-
-.product-item-row .text-right {
-  min-width: 100px;
-}
-
-.product-item-row .price-text {
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.875rem;
+  margin-bottom: 0px;
 }
 
 .btn-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+}
+
+/* Filtro Estilo ERP */
+.admin-filter-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+  padding-right: 2rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .btn-icon.edit {
