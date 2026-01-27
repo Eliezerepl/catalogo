@@ -109,21 +109,19 @@ export function AdminListPage() {
                                 <th>Produto</th>
                                 <th>Modelo</th>
                                 <th>Preço</th>
-                                <th className="text-center">Quantidade</th>
-                                <th>Situação</th>
                                 <th style={{ width: '100px' }} className="text-center">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan="8" className="text-center py-12">
+                                    <td colSpan="6" className="text-center py-12">
                                         <Loader2 className="animate-spin text-primary inline" size={32} />
                                     </td>
                                 </tr>
                             ) : filteredProducts.length === 0 ? (
                                 <tr>
-                                    <td colSpan="8" className="text-center py-20 text-gray-400">
+                                    <td colSpan="6" className="text-center py-20 text-gray-400">
                                         <Package size={48} className="mx-auto mb-2 opacity-20" />
                                         <p>Nenhum produto cadastrado.</p>
                                     </td>
@@ -142,12 +140,6 @@ export function AdminListPage() {
                                         <td className="font-medium text-gray-600">{p.name}</td>
                                         <td className="text-gray-500">{p.category}</td>
                                         <td className="text-gray-700 font-semibold">R${p.price.toFixed(2)}</td>
-                                        <td className="text-center">
-                                            <span className={`erp-qty-badge ${p.id % 2 === 0 ? 'orange' : 'green'}`}>
-                                                {Math.floor(Math.random() * 1000)}
-                                            </span>
-                                        </td>
-                                        <td className="text-gray-500">Habilitado</td>
                                         <td className="text-center">
                                             <div className="flex justify-center gap-1">
                                                 <Link to={`/admin/editar/${p.id}`} className="erp-action-btn edit" title="Editar">
