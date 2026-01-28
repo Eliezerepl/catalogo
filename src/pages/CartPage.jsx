@@ -65,11 +65,10 @@ ${itemsList}
 Total: R$ ${totalAmount.toFixed(2)}
 Observações: ${checkoutForm.obs}`;
 
-            // 3. Limpa o carrinho e redireciona
+            // 3. Limpa o carrinho e redireciona direto
             clearCart();
             const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
-            window.location.href = '/'; // Volta para a home
+            window.location.href = url;
 
         } catch (error) {
             console.error('Erro ao processar pedido:', error);
