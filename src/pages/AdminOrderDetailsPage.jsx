@@ -206,10 +206,16 @@ export function AdminOrderDetailsPage() {
                                         <tr key={item.id} className="border-b last:border-0 hover:bg-gray-50">
                                             <td className="p-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-12 h-12 rounded-lg border border-gray-200 overflow-hidden bg-white flex-shrink-0 flex items-center justify-center p-1">
-                                                        <img src={item.image} className="max-w-full max-h-full object-contain" />
+                                                    <div
+                                                        style={{ width: '48px', height: '48px', minWidth: '48px' }}
+                                                        className="rounded-lg border border-gray-200 overflow-hidden bg-white flex items-center justify-center p-1"
+                                                    >
+                                                        <img
+                                                            src={item.image}
+                                                            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                                                        />
                                                     </div>
-                                                    <div>
+                                                    <div className="flex-1">
                                                         <p className="font-bold text-gray-700 leading-tight">{item.name}</p>
                                                         <p className="text-[10px] text-gray-400 uppercase tracking-wider">{item.category}</p>
                                                     </div>
