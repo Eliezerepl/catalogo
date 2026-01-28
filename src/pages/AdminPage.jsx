@@ -50,11 +50,11 @@ export function AdminPage() {
             if (data) {
                 setForm({
                     ...form,
-                    name: data.name,
-                    category: data.category,
-                    price: data.price.toString(),
-                    unit: data.unit,
-                    image: data.image,
+                    name: data.name || '',
+                    category: data.category || 'Limpeza',
+                    price: (data.price || 0).toString(),
+                    unit: data.unit || 'un',
+                    image: data.image || '',
                     description: data.description || ''
                 });
             }
@@ -99,7 +99,7 @@ export function AdminPage() {
             const updateData = {
                 name: form.name,
                 category: form.category,
-                price: parseFloat(form.price),
+                price: parseFloat(form.price.toString().replace(',', '.')) || 0,
                 unit: form.unit,
                 image: finalImageUrl,
                 description: form.description

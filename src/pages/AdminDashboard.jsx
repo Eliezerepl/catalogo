@@ -126,7 +126,7 @@ export function AdminDashboard() {
                                 <span className="category-tag">{stats.latestProduct.category}</span>
                                 <h4 className="text-xl">{stats.latestProduct.name}</h4>
                                 <div className="price-tag text-2xl">
-                                    R$ {stats.latestProduct.price.toFixed(2)}
+                                    R$ {Number(stats.latestProduct.price || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     <small className="text-sm">/{stats.latestProduct.unit}</small>
                                 </div>
                             </div>
