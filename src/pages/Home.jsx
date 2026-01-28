@@ -30,6 +30,7 @@ export function Home() {
                 const { data, error } = await supabase
                     .from('products')
                     .select('*')
+                    .eq('status', true)
                     .order('created_at', { ascending: false });
 
                 if (error) throw error;

@@ -77,8 +77,8 @@ export function AdminDashboard() {
                 <div className="admin-stat-card receber-hoje">
                     <div className="stat-main">
                         <div>
-                            <h3 className="stat-v-value">Ativo</h3>
-                            <span className="stat-v-label">Status Catálogo</span>
+                            <h3 className="stat-v-value">Online</h3>
+                            <span className="stat-v-label">Sistema BHB</span>
                         </div>
                         <TrendingUp size={48} className="opacity-20" />
                     </div>

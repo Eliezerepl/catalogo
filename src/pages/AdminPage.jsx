@@ -55,7 +55,8 @@ export function AdminPage() {
                     price: (data.price || 0).toString(),
                     unit: data.unit || 'un',
                     image: data.image || '',
-                    description: data.description || ''
+                    description: data.description || '',
+                    status: data.status ?? true
                 });
             }
         } catch (error) {
@@ -106,7 +107,8 @@ export function AdminPage() {
                 price: numericPrice,
                 unit: form.unit || 'un',
                 image: finalImageUrl || '',
-                description: form.description || ''
+                description: form.description || '',
+                status: form.status
             };
 
             if (id) {
@@ -211,7 +213,7 @@ export function AdminPage() {
                                             className={`erp-status-btn ${!form.status ? 'inactive' : ''}`}
                                             onClick={() => setForm({ ...form, status: !form.status })}
                                         >
-                                            {form.status ? 'Ativo' : 'Inativo'}
+                                            {form.status ? 'Em estoque' : 'Sem estoque'}
                                             <span className="w-4 h-4 bg-white rounded-sm"></span>
                                         </button>
                                     </div>

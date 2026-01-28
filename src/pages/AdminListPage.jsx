@@ -111,19 +111,20 @@ export function AdminListPage() {
                                 <th>Produto</th>
                                 <th>Categoria</th>
                                 <th>Preço</th>
+                                <th className="text-center">Situação</th>
                                 <th style={{ width: '100px' }} className="text-center">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-12">
+                                    <td colSpan="7" className="text-center py-12">
                                         <Loader2 key="list-loader" className="animate-spin text-primary inline" size={32} />
                                     </td>
                                 </tr>
                             ) : filteredProducts.length === 0 ? (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-20 text-gray-400">
+                                    <td colSpan="7" className="text-center py-20 text-gray-400">
                                         <Package size={48} className="mx-auto mb-2 opacity-20" />
                                         <p>Nenhum produto cadastrado.</p>
                                     </td>
@@ -143,6 +144,11 @@ export function AdminListPage() {
                                         <td className="text-gray-500">{p?.category || '---'}</td>
                                         <td className="text-gray-700 font-semibold">
                                             R$ {Number(p?.price || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                        </td>
+                                        <td className="text-center">
+                                            <span className={`erp-qty-badge ${p?.status !== false ? 'green' : 'orange'}`}>
+                                                {p?.status !== false ? 'Em estoque' : 'Sem estoque'}
+                                            </span>
                                         </td>
                                         <td className="text-center">
                                             <div className="flex justify-center gap-1">
