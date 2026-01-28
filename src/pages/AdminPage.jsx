@@ -228,7 +228,7 @@ export function AdminPage() {
                             {/* LINHA 3: CATEGORIA, PREÇO E UNIDADE */}
                             <div className="erp-form-row">
                                 <div className="erp-field" style={{ flex: 2 }}>
-                                    <label className="erp-label">Categoria <span>(opcional)</span></label>
+                                    <label className="erp-label">Categoria</label>
                                     <select
                                         className="erp-select"
                                         value={form.category}
@@ -241,7 +241,7 @@ export function AdminPage() {
                                     </select>
                                 </div>
                                 <div className="erp-field" style={{ flex: 1 }}>
-                                    <label className="erp-label">Preço de venda</label>
+                                    <label className="erp-label">Preço</label>
                                     <div className="erp-financial-input">
                                         <span className="erp-currency-symbol">R$</span>
                                         <input
