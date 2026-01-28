@@ -206,10 +206,12 @@ export function AdminOrderDetailsPage() {
                                         <tr key={item.id} className="border-b last:border-0 hover:bg-gray-50">
                                             <td className="p-3">
                                                 <div className="flex items-center gap-3">
-                                                    <img src={item.image} className="w-10 h-10 rounded border object-cover" />
+                                                    <div className="w-10 h-10 rounded-md border border-gray-100 overflow-hidden bg-gray-50 flex-shrink-0">
+                                                        <img src={item.image} className="w-full h-full object-cover" />
+                                                    </div>
                                                     <div>
-                                                        <p className="font-bold text-gray-700">{item.name}</p>
-                                                        <p className="text-[10px] text-gray-400 uppercase">{item.category}</p>
+                                                        <p className="font-bold text-gray-700 leading-tight">{item.name}</p>
+                                                        <p className="text-[10px] text-gray-400 uppercase tracking-wider">{item.category}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -288,10 +290,12 @@ export function AdminOrderDetailsPage() {
                                         onClick={() => handleAddItem(p)}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <img src={p.image} className="w-12 h-12 rounded object-cover border shadow-sm" />
+                                            <div className="w-10 h-10 rounded-md border border-gray-100 overflow-hidden bg-gray-50 flex-shrink-0">
+                                                <img src={p.image} className="w-full h-full object-cover" />
+                                            </div>
                                             <div>
-                                                <p className="font-bold text-gray-800">{p.name}</p>
-                                                <p className="text-xs text-gray-500">R$ {Number(p.price).toFixed(2)} / {p.unit}</p>
+                                                <p className="font-bold text-gray-800 text-sm leading-tight">{p.name}</p>
+                                                <p className="text-[10px] text-gray-500 uppercase">R$ {Number(p.price).toFixed(2)} / {p.unit}</p>
                                             </div>
                                         </div>
                                         <Plus size={20} className="text-primary" />
