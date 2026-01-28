@@ -130,27 +130,27 @@ export function AdminListPage() {
                                 </tr>
                             ) : (
                                 filteredProducts.map((p) => (
-                                    <tr key={p.id}>
+                                    <tr key={p?.id || Math.random()}>
                                         <td>
                                             <input type="checkbox" className="erp-checkbox" />
                                         </td>
                                         <td className="text-center">
                                             <div className="erp-img-box">
-                                                <img src={p.image} alt="" />
+                                                <img src={p?.image || ''} alt="" />
                                             </div>
                                         </td>
-                                        <td className="font-medium text-gray-600">{p.name}</td>
-                                        <td className="text-gray-500">{p.category}</td>
+                                        <td className="font-medium text-gray-600">{p?.name || '---'}</td>
+                                        <td className="text-gray-500">{p?.category || '---'}</td>
                                         <td className="text-gray-700 font-semibold">
-                                            R$ {Number(p.price || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                            R$ {Number(p?.price || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                         </td>
                                         <td className="text-center">
                                             <div className="flex justify-center gap-1">
-                                                <Link to={`/admin/editar/${p.id}`} className="erp-action-btn edit" title="Editar">
+                                                <Link to={`/admin/editar/${p?.id}`} className="erp-action-btn edit" title="Editar">
                                                     <Edit size={16} />
                                                 </Link>
                                                 <button
-                                                    onClick={() => handleDelete(p.id)}
+                                                    onClick={() => handleDelete(p?.id)}
                                                     className="erp-action-btn delete"
                                                     title="Excluir"
                                                 >

@@ -96,13 +96,17 @@ export function AdminPage() {
                 finalImageUrl = await uploadImage(imageFile);
             }
 
+            // Garante que o preço seja tratado com segurança, aceitando vírgula ou ponto
+            const safePrice = form.price ? form.price.toString().replace(',', '.') : '0';
+            const numericPrice = parseFloat(safePrice) || 0;
+
             const updateData = {
-                name: form.name,
-                category: form.category,
-                price: parseFloat(form.price.toString().replace(',', '.')) || 0,
-                unit: form.unit,
-                image: finalImageUrl,
-                description: form.description
+                name: form.name || 'Sem nome',
+                category: form.category || 'Limpeza',
+                price: numericPrice,
+                unit: form.unit || 'un',
+                image: finalImageUrl || '',
+                description: form.description || ''
             };
 
             if (id) {
