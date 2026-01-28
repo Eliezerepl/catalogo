@@ -7,7 +7,8 @@ import {
     Box,
     ArrowRight,
     RefreshCw,
-    LayoutTemplate
+    LayoutTemplate,
+    ShoppingCart
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
@@ -79,10 +80,10 @@ export function AdminDashboard() {
                 <div className="admin-stat-card receber-hoje">
                     <div className="stat-main">
                         <div>
-                            <h3 className="stat-v-value">Online</h3>
-                            <span className="stat-v-label">Sistema BHB</span>
+                            <h3 className="stat-v-value">{stats.pendingOrders || 0}</h3>
+                            <span className="stat-v-label">Pedidos Pendentes</span>
                         </div>
-                        <TrendingUp size={48} className="opacity-20" />
+                        <ShoppingCart size={48} className="opacity-20" />
                     </div>
                 </div>
 

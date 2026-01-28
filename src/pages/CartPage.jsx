@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, MessageCircle, ArrowLeft, ShoppingCart } from 'lucide-react';
+import { Minus, Plus, Trash2, MessageCircle, ArrowLeft, ShoppingCart, Loader2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { supabase } from '../lib/supabase';
 
 const WHATSAPP_NUMBER = "5511999999999";
 
 export function CartPage() {
-    const { cart, updateQty, removeFromCart, cartTotalItems } = useCart();
+    const { cart, updateQty, removeFromCart, cartTotalItems, clearCart } = useCart();
+    const [isSaving, setIsSaving] = useState(false);
     const [showCheckout, setShowCheckout] = useState(false);
     const [checkoutForm, setCheckoutForm] = useState({
         name: "",
@@ -15,7 +17,7 @@ export function CartPage() {
         obs: ""
     });
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         if (!checkoutForm.name || !checkoutForm.neighborhood) {
             alert("Por favor, preencha Nome e Bairro.");
             return;
@@ -26,11 +28,33 @@ export function CartPage() {
             return;
         }
 
-        const itemsList = cart.map(item =>
-            `${item.qty}x ${item.name} (${item.unit})`
-        ).join('\n');
+        try {
+            setIsSaving(true);
+            const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
-        const message = `Olá! Gostaria de solicitar um orçamento.
+            // 1. Salva no Banco de Dados
+            const { data: order, error } = await supabase
+                .from('orders')
+                .insert([{
+                    customer_name: checkoutForm.name,
+                    customer_neighborhood: checkoutForm.neighborhood,
+                    delivery_type: checkoutForm.deliveryType,
+                    observations: checkoutForm.obs,
+                    items: cart,
+                    total_amount: totalAmount,
+                    status: 'Pendente'
+                }])
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            // 2. Prepara mensagem do WhatsApp
+            const itemsList = cart.map(item =>
+                `${item.qty}x ${item.name} (${item.unit})`
+            ).join('\n');
+
+            const message = `Olá! Gostaria de confirmar meu pedido #${order.id}.
 Nome: ${checkoutForm.name}
 Bairro: ${checkoutForm.neighborhood}
 Retirada/Entrega: ${checkoutForm.deliveryType}
@@ -38,10 +62,21 @@ Retirada/Entrega: ${checkoutForm.deliveryType}
 Itens:
 ${itemsList}
 
+Total: R$ ${totalAmount.toFixed(2)}
 Observações: ${checkoutForm.obs}`;
 
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
+            // 3. Limpa o carrinho e redireciona
+            clearCart();
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            window.location.href = '/'; // Volta para a home
+
+        } catch (error) {
+            console.error('Erro ao processar pedido:', error);
+            alert('Ocorreu um erro ao enviar seu pedido. Tente novamente.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     if (cart.length === 0) {

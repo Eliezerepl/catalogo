@@ -7,6 +7,8 @@ import { CartPage } from './pages/CartPage';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminPage } from './pages/AdminPage';
 import { AdminListPage } from './pages/AdminListPage';
+import { AdminOrdersPage } from './pages/AdminOrdersPage';
+import { AdminOrderDetailsPage } from './pages/AdminOrderDetailsPage';
 import { LoginPage } from './pages/LoginPage';
 import { CATEGORIES } from './data';
 
@@ -218,6 +220,22 @@ function RouterWrapper() {
               element={
                 <ProtectedRoute>
                   <AdminPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/pedidos"
+              element={
+                <ProtectedRoute>
+                  <AdminOrdersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/pedido/:id"
+              element={
+                <ProtectedRoute>
+                  <AdminOrderDetailsPage />
                 </ProtectedRoute>
               }
             />
