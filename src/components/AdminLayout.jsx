@@ -4,6 +4,7 @@ import {
     PlusCircle,
     List,
     ShoppingBag,
+    ShoppingCart,
     LogOut,
     ExternalLink,
     Bell,
@@ -44,6 +45,10 @@ export function AdminLayout({ children, title = "Painel" }) {
                     <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
                         <LayoutDashboard size={18} />
                         Painel Geral
+                    </Link>
+                    <Link to="/admin/pedidos" className={`nav-link ${location.pathname.startsWith('/admin/pedido') ? 'active' : ''}`}>
+                        <ShoppingCart size={18} />
+                        Gerenciar Pedidos
                     </Link>
                     <Link to="/admin/lista" className={`nav-link ${location.pathname === '/admin/lista' ? 'active' : ''}`}>
                         <List size={18} />

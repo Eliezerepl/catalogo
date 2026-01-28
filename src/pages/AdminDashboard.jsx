@@ -77,7 +77,7 @@ export function AdminDashboard() {
                     </div>
                 </div>
 
-                <div className="admin-stat-card receber-hoje">
+                <Link to="/admin/pedidos" className="admin-stat-card receber-hoje no-underline">
                     <div className="stat-main">
                         <div>
                             <h3 className="stat-v-value">{stats.pendingOrders || 0}</h3>
@@ -85,7 +85,7 @@ export function AdminDashboard() {
                         </div>
                         <ShoppingCart size={48} className="opacity-20" />
                     </div>
-                </div>
+                </Link>
 
                 <div className="admin-stat-card pagar-hoje">
                     <div className="stat-main">
