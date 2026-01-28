@@ -118,7 +118,7 @@ export function AdminListPage() {
                             {loading ? (
                                 <tr>
                                     <td colSpan="6" className="text-center py-12">
-                                        <Loader2 className="animate-spin text-primary inline" size={32} />
+                                        <Loader2 key="list-loader" className="animate-spin text-primary inline" size={32} />
                                     </td>
                                 </tr>
                             ) : filteredProducts.length === 0 ? (

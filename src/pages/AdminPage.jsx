@@ -115,17 +115,17 @@ export function AdminPage() {
                     .update(updateData)
                     .eq('id', id);
                 if (error) throw error;
-                alert('Produto atualizado com sucesso!');
             } else {
                 const { error } = await supabase
                     .from('products')
                     .insert([updateData]);
                 if (error) throw error;
-                alert('Produto cadastrado com sucesso!');
             }
 
+            // Redireciona imediatamente sem bloquear com alert
             navigate('/admin/lista');
         } catch (error) {
+            console.error('Erro ao salvar:', error);
             alert('Erro ao salvar: ' + error.message);
         } finally {
             setSaving(false);
@@ -287,10 +287,19 @@ export function AdminPage() {
                                 <button
                                     type="submit"
                                     disabled={saving}
-                                    className="px-8 py-2 bg-[#0093d1] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 disabled:opacity-50"
+                                    className="px-8 py-2 bg-[#0093d1] text-white rounded text-sm font-bold shadow-sm flex items-center justify-center gap-2 hover:brightness-95 disabled:opacity-50 min-w-[160px]"
                                 >
-                                    {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
-                                    {saving ? 'Gravando...' : 'Gravar Produto'}
+                                    {saving ? (
+                                        <>
+                                            <Loader2 key="loader" className="animate-spin" size={16} />
+                                            <span>Gravando...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save key="save" size={16} />
+                                            <span>Gravar Produto</span>
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>
