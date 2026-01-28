@@ -225,33 +225,9 @@ export function AdminPage() {
                                 <span className="text-[10px] text-gray-400">Quantidade máxima de 700 caracteres</span>
                             </div>
 
-                            {/* LINHA 3: FORNECEDOR E MARCA */}
+                            {/* LINHA 3: CATEGORIA, PREÇO E UNIDADE */}
                             <div className="erp-form-row">
-                                <div className="erp-field">
-                                    <label className="erp-label">Fornecedor <span>(opcional)</span></label>
-                                    <select className="erp-select">
-                                        <option value="">(selecione)</option>
-                                    </select>
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Marca <span>(opcional)</span></label>
-                                    <select className="erp-select">
-                                        <option value="">Informe a marca do produto</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {/* LINHA 4: CÓDIGO, REFERÊNCIA E CATEGORIA */}
-                            <div className="erp-form-row">
-                                <div className="erp-field">
-                                    <label className="erp-label">Código <span>(opcional)</span></label>
-                                    <input type="text" className="erp-input erp-input-disabled" placeholder="Ex: 3.023" />
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Referência interna <span>(opcional)</span></label>
-                                    <input type="text" className="erp-input" />
-                                </div>
-                                <div className="erp-field">
+                                <div className="erp-field" style={{ flex: 2 }}>
                                     <label className="erp-label">Categoria <span>(opcional)</span></label>
                                     <select
                                         className="erp-select"
@@ -264,46 +240,7 @@ export function AdminPage() {
                                         <option value="Automotivo">Automotivo</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            {/* LINHA 5: FINANCEIRO */}
-                            <div className="erp-numeric-grid">
-                                <div className="erp-field">
-                                    <label className="erp-label">Preço do fornecedor</label>
-                                    <div className="erp-financial-input text-gray-400">
-                                        <span className="erp-currency-symbol">R$</span>
-                                        <input type="text" className="erp-input" value="0,00" readOnly />
-                                    </div>
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Custo</label>
-                                    <div className="erp-financial-input text-gray-400">
-                                        <span className="erp-currency-symbol">R$</span>
-                                        <input type="text" className="erp-input" value="0,00" readOnly />
-                                    </div>
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Markup mínimo</label>
-                                    <div className="erp-financial-input text-gray-400">
-                                        <input type="text" className="erp-input text-right" value="0" readOnly />
-                                        <span className="erp-percent-symbol">%</span>
-                                    </div>
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Preço mínimo</label>
-                                    <div className="erp-financial-input text-gray-400">
-                                        <span className="erp-currency-symbol">R$</span>
-                                        <input type="text" className="erp-input" value="0,00" readOnly />
-                                    </div>
-                                </div>
-                                <div className="erp-field">
-                                    <label className="erp-label">Markup de venda</label>
-                                    <div className="erp-financial-input text-gray-400">
-                                        <input type="text" className="erp-input text-right" value="0" readOnly />
-                                        <span className="erp-percent-symbol">%</span>
-                                    </div>
-                                </div>
-                                <div className="erp-field">
+                                <div className="erp-field" style={{ flex: 1 }}>
                                     <label className="erp-label">Preço de venda</label>
                                     <div className="erp-financial-input">
                                         <span className="erp-currency-symbol">R$</span>
@@ -318,10 +255,16 @@ export function AdminPage() {
                                         />
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="text-blue-500 text-[11px] font-semibold mt-[-10px] cursor-pointer hover:underline">
-                                Usar moeda estrangeira
+                                <div className="erp-field" style={{ flex: 1 }}>
+                                    <label className="erp-label">Unidade <span>(un, kg, gl)</span></label>
+                                    <input
+                                        type="text"
+                                        className="erp-input"
+                                        placeholder="un"
+                                        value={form.unit}
+                                        onChange={e => setForm({ ...form, unit: e.target.value })}
+                                    />
+                                </div>
                             </div>
 
                             {/* BOTÕES DE AÇÃO */}
