@@ -36,15 +36,25 @@ export function AdminDashboard() {
 
             if (error) throw error;
 
+            const { data: orders } = await supabase.from('orders').select('status');
+
             if (products) {
                 const uniqueCategories = Array.from(new Set(products.map(p => p.category)));
                 const outOfStockCount = products.filter(p => p.status === false).length;
+                const lowStockCount = products.filter(p =>
+                    p.status !== false &&
+                    (p.stock_quantity || 0) <= (p.min_stock_quantity || 0)
+                ).length;
+                const pendingOrdersCount = orders ? orders.filter(o => o.status === 'Pendente').length : 0;
+
                 setStats({
                     totalProducts: products.length,
                     categories: uniqueCategories.length,
                     categoriesList: uniqueCategories,
                     latestProduct: products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0],
-                    outOfStock: outOfStockCount
+                    outOfStock: outOfStockCount,
+                    lowStock: lowStockCount,
+                    pendingOrders: pendingOrdersCount
                 });
             }
         } catch (error) {
@@ -90,8 +100,8 @@ export function AdminDashboard() {
                 <div className="admin-stat-card pagar-hoje">
                     <div className="stat-main">
                         <div>
-                            <h3 className="stat-v-value">{stats.outOfStock || 0}</h3>
-                            <span className="stat-v-label">Sem estoque</span>
+                            <h3 className="stat-v-value">{stats.lowStock || 0}</h3>
+                            <span className="stat-v-label">Estoque Crítico</span>
                         </div>
                         <Box size={48} className="opacity-20" />
                     </div>

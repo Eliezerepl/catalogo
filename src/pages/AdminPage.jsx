@@ -26,7 +26,9 @@ export function AdminPage() {
         cost: '0.00',
         min_markup: '0',
         min_price: '0.00',
-        sale_markup: '0'
+        sale_markup: '0',
+        stock_quantity: 0,
+        min_stock_quantity: 0
     });
 
     const [imageFile, setImageFile] = useState(null);
@@ -56,7 +58,9 @@ export function AdminPage() {
                     unit: data.unit || 'un',
                     image: data.image || '',
                     description: data.description || '',
-                    status: data.status ?? true
+                    status: data.status ?? true,
+                    stock_quantity: data.stock_quantity || 0,
+                    min_stock_quantity: data.min_stock_quantity || 0
                 });
             }
         } catch (error) {
@@ -108,7 +112,9 @@ export function AdminPage() {
                 unit: form.unit || 'un',
                 image: finalImageUrl || '',
                 description: form.description || '',
-                status: form.status
+                status: form.status,
+                stock_quantity: parseInt(form.stock_quantity) || 0,
+                min_stock_quantity: parseInt(form.min_stock_quantity) || 0
             };
 
             if (id) {
@@ -275,6 +281,47 @@ export function AdminPage() {
                                         onChange={e => setForm({ ...form, unit: e.target.value })}
                                     />
                                 </div>
+                            </div>
+
+                            {/* LINHA 4: ESTOQUE ATUAL E ESTOQUE MÍNIMO */}
+                            <div className="erp-form-row">
+                                <div className="erp-field" style={{ flex: 1 }}>
+                                    <label className="erp-label">Estoque Atual</label>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            className="w-8 h-8 flex items-center justify-center border rounded bg-gray-50 hover:bg-gray-100 font-bold"
+                                            onClick={() => setForm(prev => ({ ...prev, stock_quantity: Math.max(0, parseInt(prev.stock_quantity || 0) - 1) }))}
+                                        >
+                                            -
+                                        </button>
+                                        <input
+                                            type="number"
+                                            className="erp-input text-center font-bold flex-1"
+                                            value={form.stock_quantity}
+                                            onChange={e => setForm({ ...form, stock_quantity: parseInt(e.target.value) || 0 })}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="w-8 h-8 flex items-center justify-center border rounded bg-gray-50 hover:bg-gray-100 font-bold"
+                                            onClick={() => setForm(prev => ({ ...prev, stock_quantity: (parseInt(prev.stock_quantity || 0) + 1) }))}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="erp-field" style={{ flex: 1 }}>
+                                    <label className="erp-label">Estoque Mínimo</label>
+                                    <input
+                                        type="number"
+                                        className="erp-input font-bold text-center"
+                                        placeholder="0"
+                                        value={form.min_stock_quantity}
+                                        onChange={e => setForm({ ...form, min_stock_quantity: parseInt(e.target.value) || 0 })}
+                                    />
+                                    <span className="text-[10px] text-gray-400">Aviso quando atingir este valor</span>
+                                </div>
+                                <div style={{ flex: 2 }}></div> {/* Espaço vazio para manter alinhamento */}
                             </div>
 
                             {/* BOTÕES DE AÇÃO */}
