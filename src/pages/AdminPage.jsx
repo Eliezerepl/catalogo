@@ -166,7 +166,6 @@ export function AdminPage() {
                     <div className="erp-form-grid">
                         {/* LADO ESQUERDO: IMAGEM */}
                         <div className="erp-image-upload">
-                            <label className="erp-label">Imagem <span>(opcional)</span></label>
                             <div className="erp-image-preview-box">
                                 {form.image ? (
                                     <img src={form.image} alt="Preview" />
@@ -176,7 +175,12 @@ export function AdminPage() {
                             </div>
                             <label className="erp-add-image-link">
                                 Adicionar imagem
-                                <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                                <input
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                />
                             </label>
                         </div>
 
