@@ -206,22 +206,31 @@ export function AdminOrdersPage() {
                                             </span>
                                         </td>
                                         <td className="text-center">
-                                            <div className="flex justify-center gap-2">
-                                                <div className="relative group">
-                                                    <button className="erp-action-btn edit" title="Ver/Aprovar">
-                                                        <CheckCircle size={16} onClick={() => handleStatusUpdate(order.id, 'Aprovado')} />
-                                                    </button>
-                                                </div>
+                                            <div className="flex justify-center gap-1">
+                                                <button
+                                                    onClick={() => handleStatusUpdate(order.id, 'Aprovado')}
+                                                    className="erp-action-btn edit"
+                                                    title="Aprovar Pedido"
+                                                >
+                                                    <CheckCircle size={16} />
+                                                </button>
                                                 <button
                                                     onClick={() => handleStatusUpdate(order.id, 'Cancelado')}
                                                     className="erp-action-btn delete"
-                                                    title="Cancelar"
+                                                    title="Cancelar Pedido"
                                                 >
                                                     <XCircle size={16} />
                                                 </button>
-                                                <Link to={`/admin/pedido/${order.id}`} className="erp-action-btn" style={{ backgroundColor: '#666' }} title="Detalhes/Editar">
+                                                <Link to={`/admin/pedido/${order.id}`} className="erp-action-btn bg-gray-500" title="Ver Detalhes">
                                                     <Edit size={16} />
                                                 </Link>
+                                                <button
+                                                    onClick={() => handleDelete(order.id)}
+                                                    className="erp-action-btn delete bg-red-600 hover:bg-red-700"
+                                                    title="Excluir Definitivamente"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
