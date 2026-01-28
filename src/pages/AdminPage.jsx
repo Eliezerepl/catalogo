@@ -174,7 +174,7 @@ export function AdminPage() {
                                 )}
                             </div>
                             <label className="erp-add-image-link">
-                                Adicionar imagem
+                                Selecione a imagem
                                 <input
                                     type="file"
                                     style={{ display: 'none' }}
