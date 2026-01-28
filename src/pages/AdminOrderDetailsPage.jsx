@@ -206,8 +206,8 @@ export function AdminOrderDetailsPage() {
                                         <tr key={item.id} className="border-b last:border-0 hover:bg-gray-50">
                                             <td className="p-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-md border border-gray-100 overflow-hidden bg-gray-50 flex-shrink-0">
-                                                        <img src={item.image} className="w-full h-full object-cover" />
+                                                    <div className="w-12 h-12 rounded-lg border border-gray-200 overflow-hidden bg-white flex-shrink-0 flex items-center justify-center p-1">
+                                                        <img src={item.image} className="max-w-full max-h-full object-contain" />
                                                     </div>
                                                     <div>
                                                         <p className="font-bold text-gray-700 leading-tight">{item.name}</p>
