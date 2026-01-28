@@ -209,7 +209,8 @@ export function AdminOrdersPage() {
                                             <div className="flex justify-center gap-1">
                                                 <button
                                                     onClick={() => handleStatusUpdate(order.id, 'Aprovado')}
-                                                    className="erp-action-btn edit"
+                                                    className="erp-action-btn"
+                                                    style={{ backgroundColor: '#2ecc71' }}
                                                     title="Aprovar Pedido"
                                                 >
                                                     <CheckCircle size={16} />
@@ -221,7 +222,7 @@ export function AdminOrdersPage() {
                                                 >
                                                     <XCircle size={16} />
                                                 </button>
-                                                <Link to={`/admin/pedido/${order.id}`} className="erp-action-btn bg-gray-500" title="Ver Detalhes">
+                                                <Link to={`/admin/pedido/${order.id}`} className="erp-action-btn edit" title="Ver Detalhes / Editar">
                                                     <Edit size={16} />
                                                 </Link>
                                                 <button
