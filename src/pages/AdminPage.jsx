@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Plus, Loader2, Image as ImageIcon, RefreshCw } from 'lucide-react';
+import { Save, Plus, Loader2, Image as ImageIcon, RefreshCw, HelpCircle, ChevronDown } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { AdminLayout } from '../components/AdminLayout';
@@ -16,7 +16,17 @@ export function AdminPage() {
         price: '',
         unit: 'un',
         image: '',
-        description: ''
+        description: '',
+        status: true,
+        supplier: '',
+        brand: '',
+        code: '',
+        internal_ref: '',
+        supplier_price: '0.00',
+        cost: '0.00',
+        min_markup: '0',
+        min_price: '0.00',
+        sale_markup: '0'
     });
 
     const [imageFile, setImageFile] = useState(null);
@@ -39,9 +49,10 @@ export function AdminPage() {
             if (error) throw error;
             if (data) {
                 setForm({
+                    ...form,
                     name: data.name,
                     category: data.category,
-                    price: data.price,
+                    price: data.price.toString(),
                     unit: data.unit,
                     image: data.image,
                     description: data.description || ''
@@ -86,9 +97,12 @@ export function AdminPage() {
             }
 
             const updateData = {
-                ...form,
+                name: form.name,
+                category: form.category,
+                price: parseFloat(form.price),
+                unit: form.unit,
                 image: finalImageUrl,
-                price: parseFloat(form.price)
+                description: form.description
             };
 
             if (id) {
@@ -139,32 +153,108 @@ export function AdminPage() {
 
     return (
         <AdminLayout title={id ? 'Editar Produto' : 'Novo Cadastro'}>
-            <div className="admin-glass-card !bg-white !p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
-                        <h2 className="admin-section-title !mb-8">
-                            {id ? <RefreshCw size={24} /> : <Plus size={24} />}
-                            <span>{id ? 'Editar Informações' : 'Dados do Produto'}</span>
-                        </h2>
+            <div className="erp-form-card">
+                <div className="erp-form-header">
+                    <h2>Dados gerais do produto</h2>
+                    <div className="erp-actions-link cursor-pointer">
+                        <span>Ações</span>
+                        <ChevronDown size={14} />
+                    </div>
+                </div>
 
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                            <div className="form-group">
-                                <label className="form-label">Nome do Produto</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="Ex: Detergente Especial 5L"
-                                    value={form.name}
-                                    onChange={e => setForm({ ...form, name: e.target.value })}
-                                    required
-                                />
+                <form onSubmit={handleSubmit}>
+                    <div className="erp-form-grid">
+                        {/* LADO ESQUERDO: IMAGEM */}
+                        <div className="erp-image-upload">
+                            <label className="erp-label">Imagem <span>(opcional)</span></label>
+                            <div className="erp-image-preview-box">
+                                {form.image ? (
+                                    <img src={form.image} alt="Preview" />
+                                ) : (
+                                    <ImageIcon size={48} className="text-gray-200" />
+                                )}
+                            </div>
+                            <label className="erp-add-image-link">
+                                Adicionar imagem
+                                <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                            </label>
+                        </div>
+
+                        {/* LADO DIREITO: CAMPOS */}
+                        <div className="flex flex-col gap-5">
+                            {/* LINHA 1: NOME E SITUAÇÃO */}
+                            <div className="erp-form-row">
+                                <div className="erp-field" style={{ flex: 3 }}>
+                                    <label className="erp-label">Nome</label>
+                                    <input
+                                        type="text"
+                                        className="erp-input"
+                                        placeholder="Ex: Caneca"
+                                        value={form.name}
+                                        onChange={e => setForm({ ...form, name: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="erp-field" style={{ flex: 1 }}>
+                                    <label className="erp-label">Situação</label>
+                                    <div className="erp-toggle-group">
+                                        <button
+                                            type="button"
+                                            className={`erp-status-btn ${!form.status ? 'inactive' : ''}`}
+                                            onClick={() => setForm({ ...form, status: !form.status })}
+                                        >
+                                            {form.status ? 'Ativo' : 'Inativo'}
+                                            <span className="w-4 h-4 bg-white rounded-sm"></span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="form-group">
-                                    <label className="form-label">Categoria</label>
+                            {/* LINHA 2: DESCRIÇÃO */}
+                            <div className="erp-field">
+                                <label className="erp-label">
+                                    Descrição <span>(opcional)</span>
+                                    <div className="erp-help-icon" title="Detalhes do produto">?</div>
+                                </label>
+                                <textarea
+                                    className="erp-textarea h-24"
+                                    placeholder="Detalhes sobre o produto..."
+                                    value={form.description}
+                                    onChange={e => setForm({ ...form, description: e.target.value })}
+                                ></textarea>
+                                <span className="text-[10px] text-gray-400">Quantidade máxima de 700 caracteres</span>
+                            </div>
+
+                            {/* LINHA 3: FORNECEDOR E MARCA */}
+                            <div className="erp-form-row">
+                                <div className="erp-field">
+                                    <label className="erp-label">Fornecedor <span>(opcional)</span></label>
+                                    <select className="erp-select">
+                                        <option value="">(selecione)</option>
+                                    </select>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Marca <span>(opcional)</span></label>
+                                    <select className="erp-select">
+                                        <option value="">Informe a marca do produto</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* LINHA 4: CÓDIGO, REFERÊNCIA E CATEGORIA */}
+                            <div className="erp-form-row">
+                                <div className="erp-field">
+                                    <label className="erp-label">Código <span>(opcional)</span></label>
+                                    <input type="text" className="erp-input erp-input-disabled" placeholder="Ex: 3.023" />
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Referência interna <span>(opcional)</span></label>
+                                    <input type="text" className="erp-input" />
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Categoria <span>(opcional)</span></label>
                                     <select
-                                        className="form-select"
+                                        className="erp-select"
                                         value={form.category}
                                         onChange={e => setForm({ ...form, category: e.target.value })}
                                     >
@@ -174,46 +264,71 @@ export function AdminPage() {
                                         <option value="Automotivo">Automotivo</option>
                                     </select>
                                 </div>
-                                <div className="form-group">
-                                    <label className="form-label">Preço (R$)</label>
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        className="form-input"
-                                        placeholder="0,00"
-                                        value={form.price}
-                                        onChange={e => setForm({ ...form, price: e.target.value })}
-                                        required
-                                    />
+                            </div>
+
+                            {/* LINHA 5: FINANCEIRO */}
+                            <div className="erp-numeric-grid">
+                                <div className="erp-field">
+                                    <label className="erp-label">Preço do fornecedor</label>
+                                    <div className="erp-financial-input text-gray-400">
+                                        <span className="erp-currency-symbol">R$</span>
+                                        <input type="text" className="erp-input" value="0,00" readOnly />
+                                    </div>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Custo</label>
+                                    <div className="erp-financial-input text-gray-400">
+                                        <span className="erp-currency-symbol">R$</span>
+                                        <input type="text" className="erp-input" value="0,00" readOnly />
+                                    </div>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Markup mínimo</label>
+                                    <div className="erp-financial-input text-gray-400">
+                                        <input type="text" className="erp-input text-right" value="0" readOnly />
+                                        <span className="erp-percent-symbol">%</span>
+                                    </div>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Preço mínimo</label>
+                                    <div className="erp-financial-input text-gray-400">
+                                        <span className="erp-currency-symbol">R$</span>
+                                        <input type="text" className="erp-input" value="0,00" readOnly />
+                                    </div>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Markup de venda</label>
+                                    <div className="erp-financial-input text-gray-400">
+                                        <input type="text" className="erp-input text-right" value="0" readOnly />
+                                        <span className="erp-percent-symbol">%</span>
+                                    </div>
+                                </div>
+                                <div className="erp-field">
+                                    <label className="erp-label">Preço de venda</label>
+                                    <div className="erp-financial-input">
+                                        <span className="erp-currency-symbol">R$</span>
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            className="erp-input font-bold"
+                                            placeholder="0.00"
+                                            value={form.price}
+                                            onChange={e => setForm({ ...form, price: e.target.value })}
+                                            required
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className="form-label">Unidade de Venda</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="un, gl, cx, kg"
-                                    value={form.unit}
-                                    onChange={e => setForm({ ...form, unit: e.target.value })}
-                                />
+                            <div className="text-blue-500 text-[11px] font-semibold mt-[-10px] cursor-pointer hover:underline">
+                                Usar moeda estrangeira
                             </div>
 
-                            <div className="form-group">
-                                <label className="form-label">Descrição</label>
-                                <textarea
-                                    className="form-textarea"
-                                    rows="4"
-                                    placeholder="Detalhes sobre o produto..."
-                                    value={form.description}
-                                    onChange={e => setForm({ ...form, description: e.target.value })}
-                                ></textarea>
-                            </div>
-
-                            <div className="flex gap-4 mt-4">
+                            {/* BOTÕES DE AÇÃO */}
+                            <div className="flex justify-end gap-3 mt-8">
                                 <button
                                     type="button"
-                                    className="px-8 py-3 bg-gray-100 rounded-xl font-bold text-gray-500 hover:bg-gray-200 transition-all"
+                                    className="px-6 py-2 border border-gray-300 rounded text-sm font-semibold text-gray-600 hover:bg-gray-50 bg-white"
                                     onClick={() => navigate('/admin/lista')}
                                 >
                                     Cancelar
@@ -221,51 +336,15 @@ export function AdminPage() {
                                 <button
                                     type="submit"
                                     disabled={saving}
-                                    className="btn-add flex-1 rounded-xl shadow-lg shadow-primary/20"
+                                    className="px-8 py-2 bg-[#0093d1] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 disabled:opacity-50"
                                 >
-                                    {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                                    <span>{saving ? 'Salvando...' : 'Salvar Alterações'}</span>
+                                    {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
+                                    {saving ? 'Gravando...' : 'Gravar Produto'}
                                 </button>
                             </div>
-                        </form>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                        <div className="form-group">
-                            <label className="form-label">Imagem do Produto</label>
-                            <label className="upload-label !h-28 !min-h-0 !py-2">
-                                {form.image ? (
-                                    <img src={form.image} alt="Preview" className="h-full w-auto object-contain max-h-24 mx-auto" />
-                                ) : (
-                                    <>
-                                        <ImageIcon size={24} className="text-gray-300" />
-                                        <span className="font-bold text-[10px] text-gray-400">Trocar Imagem</span>
-                                    </>
-                                )}
-                                <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
-                            </label>
-                            <div className="relative mt-4">
-                                <input
-                                    type="text"
-                                    className="form-input w-full pr-10"
-                                    placeholder="Link da imagem externa..."
-                                    value={form.image.startsWith('data:') ? '' : form.image}
-                                    onChange={e => setForm({ ...form, image: e.target.value })}
-                                />
-                                <ImageIcon className="absolute right-3 top-3 text-gray-400" size={18} />
-                            </div>
-                        </div>
-
-                        <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-                            <h4 className="text-blue-700 font-bold mb-2 flex items-center gap-2">
-                                <RefreshCw size={16} /> Dica de Edição
-                            </h4>
-                            <p className="text-blue-600/80 text-sm leading-relaxed">
-                                Certifique-se de que o preço está correto antes de salvar. Alterações refletem instantaneamente no catálogo do cliente.
-                            </p>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </AdminLayout>
     );
