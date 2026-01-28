@@ -296,8 +296,14 @@ export function AdminOrderDetailsPage() {
                                         onClick={() => handleAddItem(p)}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-md border border-gray-100 overflow-hidden bg-gray-50 flex-shrink-0">
-                                                <img src={p.image} className="w-full h-full object-cover" />
+                                            <div
+                                                style={{ width: '48px', height: '48px', minWidth: '48px' }}
+                                                className="rounded-lg border border-gray-200 overflow-hidden bg-white flex items-center justify-center p-1"
+                                            >
+                                                <img
+                                                    src={p.image}
+                                                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                                                />
                                             </div>
                                             <div>
                                                 <p className="font-bold text-gray-800 text-sm leading-tight">{p.name}</p>
