@@ -48,12 +48,48 @@ export function AdminOrdersPage() {
 
     const handleStatusUpdate = async (id, newStatus) => {
         try {
-            const { error } = await supabase
+            const orderToUpdate = orders.find(o => o.id === id);
+
+            // 1. Atualizar o status do pedido
+            const { error: updateError } = await supabase
                 .from('orders')
                 .update({ status: newStatus })
                 .eq('id', id);
 
-            if (error) throw error;
+            if (updateError) throw updateError;
+
+            // 2. Se for Aprovado, remover do estoque
+            if (newStatus === 'Aprovado' && orderToUpdate.status !== 'Aprovado') {
+                for (const item of (orderToUpdate.items || [])) {
+                    const { data: productData } = await supabase
+                        .from('products')
+                        .select('stock_quantity')
+                        .eq('id', item.id)
+                        .single();
+
+                    if (productData) {
+                        const newQty = Math.max(0, (productData.stock_quantity || 0) - (item.qty || 0));
+                        await supabase.from('products').update({ stock_quantity: newQty }).eq('id', item.id);
+                    }
+                }
+            }
+
+            // 3. Se era Aprovado e foi Cancelado, devolver ao estoque
+            if (newStatus === 'Cancelado' && orderToUpdate.status === 'Aprovado') {
+                for (const item of (orderToUpdate.items || [])) {
+                    const { data: productData } = await supabase
+                        .from('products')
+                        .select('stock_quantity')
+                        .eq('id', item.id)
+                        .single();
+
+                    if (productData) {
+                        const newQty = (productData.stock_quantity || 0) + (item.qty || 0);
+                        await supabase.from('products').update({ stock_quantity: newQty }).eq('id', item.id);
+                    }
+                }
+            }
+
             setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
         } catch (error) {
             alert('Erro ao atualizar status: ' + error.message);
