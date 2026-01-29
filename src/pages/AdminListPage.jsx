@@ -3,7 +3,6 @@ import { Trash2, Edit, Loader2, Search, Package, Plus, Filter, List as ListIcon,
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { AdminLayout } from '../components/AdminLayout';
-import { AdminLayout } from '../components/AdminLayout';
 
 export function AdminListPage() {
     const [products, setProducts] = useState([]);
