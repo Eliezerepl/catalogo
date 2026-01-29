@@ -112,7 +112,9 @@ export function AdminCategoriesPage() {
                         className="btn-add px-6 py-3 flex items-center gap-2"
                         disabled={isSaving || !newCategory.trim()}
                     >
-                        {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Plus size={20} />}
+                        <span>
+                            {isSaving ? <Loader2 key="loader" className="animate-spin" size={20} /> : <Plus key="plus" size={20} />}
+                        </span>
                         Adicionar
                     </button>
                 </form>
