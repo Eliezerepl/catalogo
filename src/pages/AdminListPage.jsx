@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Edit, Loader2, Search, Package, Plus, Filter, List as ListIcon, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { AdminLayout } from '../components/AdminLayout';
 
@@ -10,6 +10,8 @@ export function AdminListPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState("Todos");
     const [categories, setCategories] = useState(["Todos"]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const showLowStock = searchParams.get('filter') === 'low_stock';
 
     useEffect(() => {
         fetchProducts();
@@ -61,7 +63,9 @@ export function AdminListPage() {
         const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             category.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === "Todos" || category === selectedCategory;
-        return matchesSearch && matchesCategory;
+        const matchesLowStock = !showLowStock || (p.stock_quantity || 0) <= (p.min_stock_quantity || 0);
+
+        return matchesSearch && matchesCategory && matchesLowStock;
     });
 
     return (
@@ -105,7 +109,17 @@ export function AdminListPage() {
             <div className="erp-table-container">
                 <div className="erp-table-header-bar">
                     <ListIcon size={18} className="text-gray-500" />
-                    <span className="font-medium text-gray-700">Listando produtos</span>
+                    <span className="font-medium text-gray-700">
+                        {showLowStock ? '📦 Produtos com Estoque Crítico' : 'Listando produtos'}
+                    </span>
+                    {showLowStock && (
+                        <button
+                            onClick={() => setSearchParams({})}
+                            className="ml-auto text-xs bg-red-100 text-red-600 px-2 py-1 rounded hover:bg-red-200 transition-colors font-bold"
+                        >
+                            Limpar Filtro
+                        </button>
+                    )}
                 </div>
 
                 <div className="erp-table-wrapper">

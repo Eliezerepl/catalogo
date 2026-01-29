@@ -98,7 +98,7 @@ export function AdminDashboard() {
                     </div>
                 </Link>
 
-                <div className="admin-stat-card pagar-hoje">
+                <Link to="/admin/lista?filter=low_stock" className="admin-stat-card pagar-hoje no-underline">
                     <div className="stat-main">
                         <div>
                             <h3 className="stat-v-value">{stats.lowStock || 0}</h3>
@@ -106,7 +106,7 @@ export function AdminDashboard() {
                         </div>
                         <Box size={48} className="opacity-20" />
                     </div>
-                </div>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 gap-6 mt-6">
