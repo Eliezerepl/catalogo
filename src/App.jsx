@@ -10,6 +10,7 @@ import { AdminListPage } from './pages/AdminListPage';
 import { AdminOrdersPage } from './pages/AdminOrdersPage';
 import { AdminOrderDetailsPage } from './pages/AdminOrderDetailsPage';
 import { LoginPage } from './pages/LoginPage';
+import { Footer } from './components/Footer';
 import { CATEGORIES } from './data';
 
 import logoImg from './assets/logo.png';
@@ -179,6 +180,8 @@ function Layout() {
       <main className={location.pathname.startsWith('/admin') ? '' : 'container'}>
         <Outlet context={{ searchQuery, selectedCategory, setSelectedCategory }} />
       </main>
+
+      {!location.pathname.startsWith('/admin') && <Footer />}
     </div>
   );
 }
