@@ -9,7 +9,9 @@ import {
     MessageCircle,
     ShoppingBag,
     ShieldCheck,
-    Truck
+    Truck,
+    Clock,
+    Smartphone
 } from 'lucide-react';
 import { CATEGORIES } from '../data';
 import logoImg from '../assets/logo.png';
@@ -26,8 +28,15 @@ export function Footer() {
                         </Link>
                         <p className="footer-desc">
                             Especialistas em soluções de limpeza e organização para sua casa ou empresa.
-                            Qualidade, economia e entrega rápida em um só lugar.
                         </p>
+                        <div className="contact-item mt-4">
+                            <Clock size={18} className="text-primary" />
+                            <div className="text-sm">
+                                <p className="font-bold">Horário de Funcionamento:</p>
+                                <p>Seg à Sex: 08h às 18h</p>
+                                <p>Sábados: 08h às 15h</p>
+                            </div>
+                        </div>
                         <div className="footer-social">
                             <a href="#" className="social-icon" aria-label="Instagram">
                                 <Instagram size={20} />
@@ -73,6 +82,10 @@ export function Footer() {
                         </div>
                         <div className="contact-item">
                             <Phone size={18} className="text-primary" />
+                            <span>(19) 3562-2640</span>
+                        </div>
+                        <div className="contact-item">
+                            <Smartphone size={18} className="text-primary" />
                             <span>(19) 93500-4003</span>
                         </div>
                         <div className="contact-item">
@@ -86,8 +99,8 @@ export function Footer() {
                     <div className="feature-item">
                         <Truck size={24} />
                         <div>
-                            <h5>Entrega Rápida</h5>
-                            <p>Para toda a região</p>
+                            <h5>Entrega Gratuita</h5>
+                            <p>Em Pirassununga nas compras acima de R$ 50,00</p>
                         </div>
                     </div>
                     <div className="feature-item">
