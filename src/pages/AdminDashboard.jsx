@@ -37,9 +37,10 @@ export function AdminDashboard() {
             if (error) throw error;
 
             const { data: orders } = await supabase.from('orders').select('status');
+            const { data: dbCategories } = await supabase.from('categories').select('name');
 
             if (products) {
-                const uniqueCategories = Array.from(new Set(products.map(p => p.category)));
+                const categoryNames = dbCategories ? dbCategories.map(c => c.name) : [];
                 const outOfStockCount = products.filter(p => p.status === false).length;
                 const lowStockCount = products.filter(p =>
                     p.status !== false &&
@@ -49,8 +50,8 @@ export function AdminDashboard() {
 
                 setStats({
                     totalProducts: products.length,
-                    categories: uniqueCategories.length,
-                    categoriesList: uniqueCategories,
+                    categories: categoryNames.length,
+                    categoriesList: categoryNames,
                     latestProduct: products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0],
                     outOfStock: outOfStockCount,
                     lowStock: lowStockCount,
@@ -110,10 +111,13 @@ export function AdminDashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                 <div className="widget-card">
-                    <h3 className="widget-title !text-left !mb-6 font-bold flex items-center gap-2">
-                        <LayoutTemplate size={20} className="text-primary" />
-                        Categorias no Sistema
-                    </h3>
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="widget-title !text-left !mb-0 font-bold flex items-center gap-2">
+                            <LayoutTemplate size={20} className="text-primary" />
+                            Categorias no Sistema
+                        </h3>
+                        <Link to="/admin/categorias" className="text-xs font-bold text-primary hover:underline">Gerenciar</Link>
+                    </div>
                     <div className="space-y-3">
                         {stats.categoriesList.map(cat => (
                             <div key={cat} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">

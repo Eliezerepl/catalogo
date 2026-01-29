@@ -10,7 +10,8 @@ import {
     Bell,
     User,
     Menu,
-    Search
+    Search,
+    Tag
 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
@@ -56,6 +57,10 @@ export function AdminLayout({ children, title = "Painel" }) {
                     <Link to="/admin/cadastro" className={`nav-link ${location.pathname === '/admin/cadastro' ? 'active' : ''}`}>
                         <PlusCircle size={18} />
                         Cadastrar Novo
+                    </Link>
+                    <Link to="/admin/categorias" className={`nav-link ${location.pathname === '/admin/categorias' ? 'active' : ''}`}>
+                        <Tag size={18} />
+                        Gerenciar Categorias
                     </Link>
 
                     <div className="mt-auto p-4">

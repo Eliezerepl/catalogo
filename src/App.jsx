@@ -9,8 +9,10 @@ import { AdminPage } from './pages/AdminPage';
 import { AdminListPage } from './pages/AdminListPage';
 import { AdminOrdersPage } from './pages/AdminOrdersPage';
 import { AdminOrderDetailsPage } from './pages/AdminOrderDetailsPage';
+import { AdminCategoriesPage } from './pages/AdminCategoriesPage';
 import { LoginPage } from './pages/LoginPage';
 import { Footer } from './components/Footer';
+import { supabase } from './lib/supabase';
 import { CATEGORIES } from './data';
 
 import logoImg from './assets/logo.png';
@@ -25,8 +27,19 @@ const ProtectedRoute = ({ children }) => {
 function Layout() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [categories, setCategories] = useState(["Todos"]);
   const { cart, updateQty, removeFromCart, cartTotalItems, isDrawerOpen, closeDrawer, openDrawer } = useCart();
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchCats = async () => {
+      const { data } = await supabase.from('categories').select('name').order('name');
+      if (data) {
+        setCategories(["Todos", ...data.map(c => c.name)]);
+      }
+    };
+    fetchCats();
+  }, []);
 
   // Reset category when searching or navigating? Optional.
 
@@ -115,8 +128,10 @@ function Layout() {
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
-                    {CATEGORIES.map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
+                    {categories.map(cat => (
+                      <option key={cat} value={cat}>
+                        {cat === "Todos" ? "Ver todas as categorias" : cat}
+                      </option>
                     ))}
                   </select>
                   <div className="header-search">
@@ -161,7 +176,7 @@ function Layout() {
             <div className="nav-container">
               <span className="nav-title">Principais Categorias:</span>
               <div className="nav-links">
-                {CATEGORIES.map(cat => {
+                {categories.map(cat => {
                   if (cat === "Todos") return null;
 
                   const icons = {
@@ -177,7 +192,7 @@ function Layout() {
                       className={`nav-item ${selectedCategory === cat ? 'active' : ''}`}
                       onClick={() => setSelectedCategory(cat)}
                     >
-                      {icons[cat]}
+                      {icons[cat] || <Box size={18} />}
                       {cat}
                     </span>
                   );
@@ -221,6 +236,14 @@ function RouterWrapper() {
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/categorias"
+              element={
+                <ProtectedRoute>
+                  <AdminCategoriesPage />
                 </ProtectedRoute>
               }
             />

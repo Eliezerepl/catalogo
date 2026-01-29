@@ -3,17 +3,26 @@ import { Trash2, Edit, Loader2, Search, Package, Plus, Filter, List as ListIcon,
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { AdminLayout } from '../components/AdminLayout';
-import { CATEGORIES } from '../data';
+import { AdminLayout } from '../components/AdminLayout';
 
 export function AdminListPage() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState("Todos");
+    const [categories, setCategories] = useState(["Todos"]);
 
     useEffect(() => {
         fetchProducts();
+        fetchCategories();
     }, []);
+
+    const fetchCategories = async () => {
+        const { data } = await supabase.from('categories').select('name').order('name');
+        if (data) {
+            setCategories(["Todos", ...data.map(c => c.name)]);
+        }
+    };
 
     const fetchProducts = async () => {
         try {
@@ -77,7 +86,7 @@ export function AdminListPage() {
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
-                            {CATEGORIES.map(cat => (
+                            {categories.map(cat => (
                                 <option key={cat} value={cat}>{cat}</option>
                             ))}
                         </select>

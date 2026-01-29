@@ -9,10 +9,11 @@ export function AdminPage() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [categories, setCategories] = useState([]);
 
     const [form, setForm] = useState({
         name: '',
-        category: 'Limpeza',
+        category: '',
         price: '',
         unit: 'un',
         image: '',
@@ -34,10 +35,21 @@ export function AdminPage() {
     const [imageFile, setImageFile] = useState(null);
 
     useEffect(() => {
+        fetchCategories();
         if (id) {
             fetchProduct(id);
         }
     }, [id]);
+
+    const fetchCategories = async () => {
+        const { data } = await supabase.from('categories').select('name').order('name');
+        if (data && data.length > 0) {
+            setCategories(data.map(c => c.name));
+            if (!id) {
+                setForm(prev => ({ ...prev, category: data[0].name }));
+            }
+        }
+    };
 
     const fetchProduct = async (productId) => {
         try {
@@ -249,11 +261,12 @@ export function AdminPage() {
                                         className="erp-select"
                                         value={form.category}
                                         onChange={e => setForm({ ...form, category: e.target.value })}
+                                        required
                                     >
-                                        <option value="Limpeza">Limpeza</option>
-                                        <option value="Utensílios">Utensílios</option>
-                                        <option value="Organização">Organização</option>
-                                        <option value="Automotivo">Automotivo</option>
+                                        <option value="" disabled>Selecione uma categoria</option>
+                                        {categories.map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="erp-field" style={{ flex: 1 }}>
