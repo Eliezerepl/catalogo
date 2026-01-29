@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link, Outlet, useLocation, Navigate } from 'react-router-dom';
-import { ShoppingCart, Search, Menu, HelpCircle, User, Star, X, Plus, Minus, Trash2 } from 'lucide-react';
+import { ShoppingCart, Search, Menu, HelpCircle, User, Star, X, Plus, Minus, Trash2, Droplets, Utensils, Box, Car } from 'lucide-react';
 import { CartProvider, useCart } from './context/CartContext';
 import { Home } from './pages/Home';
 import { CartPage } from './pages/CartPage';
@@ -158,22 +158,30 @@ function Layout() {
             </div>
 
             {/* Navigation Bar */}
-            <div className="navbar">
-              <div className="container navbar-content">
-                {/* Scrollable Nav Links Only */}
-                <div className="nav-links">
-                  {CATEGORIES.map(cat => (
-                    cat !== "Todos" && (
-                      <span
-                        key={cat}
-                        className={`nav-item ${selectedCategory === cat ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(cat)}
-                      >
-                        {cat}
-                      </span>
-                    )
-                  ))}
-                </div>
+            <div className="nav-container">
+              <span className="nav-title">Principais Categorias:</span>
+              <div className="nav-links">
+                {CATEGORIES.map(cat => {
+                  if (cat === "Todos") return null;
+
+                  const icons = {
+                    "Limpeza": <Droplets size={18} />,
+                    "Utensílios": <Utensils size={18} />,
+                    "Organização": <Box size={18} />,
+                    "Automotivo": <Car size={18} />
+                  };
+
+                  return (
+                    <span
+                      key={cat}
+                      className={`nav-item ${selectedCategory === cat ? 'active' : ''}`}
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      {icons[cat]}
+                      {cat}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </header>
