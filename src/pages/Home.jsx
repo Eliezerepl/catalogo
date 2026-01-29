@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Plus, X, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useCart } from '../context/CartContext';
+import bannerImg from '../assets/banner.png';
 
 export function Home() {
     const { searchQuery, selectedCategory } = useOutletContext();
@@ -63,6 +64,9 @@ export function Home() {
 
     return (
         <div className="home-page">
+            <div className="home-banner">
+                <img src={bannerImg} alt="Banner Promocional Ardulimp" className="banner-image" />
+            </div>
             <div className="products-grid">
                 {filteredProducts.map(product => (
                     <div key={product.id} className="product-card">
