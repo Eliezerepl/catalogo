@@ -102,7 +102,7 @@ export function AdminOrderDetailsPage() {
 
             if (error) throw error;
             setOrder({ ...order, status: 'Aprovado' });
-            alert('Pedido aprovado com sucesso!');
+            setTimeout(() => alert('Pedido aprovado com sucesso!'), 100);
         } catch (error) {
             alert('Erro ao aprovar: ' + error.message);
         } finally {
@@ -327,6 +327,7 @@ export function AdminOrderDetailsPage() {
 
                             {order.status === 'Aprovado' && (
                                 <button
+                                    key="pdf-btn"
                                     onClick={generatePDF}
                                     className="px-6 py-2 bg-[#f39c12] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 transition-all"
                                 >
@@ -336,6 +337,7 @@ export function AdminOrderDetailsPage() {
 
                             {order.status !== 'Aprovado' && (
                                 <button
+                                    key="approve-btn"
                                     onClick={handleApprove}
                                     disabled={saving}
                                     className="px-6 py-2 bg-[#27ae60] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 transition-all disabled:opacity-50"
