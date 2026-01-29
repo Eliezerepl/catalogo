@@ -130,6 +130,11 @@ button {
   .header.is-cart-page .navbar {
     display: none;
   }
+
+  .cart-page h1 {
+    font-size: 1.5rem !important;
+    gap: 0.5rem !important;
+  }
 }
 
 /* Header Actions */
