@@ -109,24 +109,7 @@ export function AdminDashboard() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                <div className="widget-card">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="widget-title !text-left !mb-0 font-bold flex items-center gap-2">
-                            <LayoutTemplate size={20} className="text-primary" />
-                            Categorias no Sistema
-                        </h3>
-                        <Link to="/admin/categorias" className="text-xs font-bold text-primary hover:underline">Gerenciar</Link>
-                    </div>
-                    <div className="space-y-3">
-                        {stats.categoriesList.map(cat => (
-                            <div key={cat} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                <span className="font-semibold text-gray-700">{cat}</span>
-                                <Link to="/admin/lista" className="text-xs font-bold text-primary hover:underline">Ver Itens</Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <div className="grid grid-cols-1 gap-6 mt-6">
 
                 <div className="widget-card">
                     <h3 className="widget-title !text-left !mb-6 font-bold flex items-center gap-2">

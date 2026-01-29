@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Save, X, Edit2, Loader2, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
+import { AdminLayout } from '../components/AdminLayout';
 
 export function AdminCategoriesPage() {
     const [categories, setCategories] = useState([]);
@@ -95,16 +96,7 @@ export function AdminCategoriesPage() {
     };
 
     return (
-        <div className="container py-8 max-w-4xl">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <Link to="/admin" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <ArrowLeft size={24} />
-                    </Link>
-                    <h1 className="text-3xl font-bold text-gray-800">Gerenciar Categorias</h1>
-                </div>
-            </div>
-
+        <AdminLayout title="Gerenciar Categorias">
             <div className="admin-glass-card p-6 mb-8">
                 <form onSubmit={handleAddCategory} className="flex gap-4">
                     <input
@@ -186,6 +178,6 @@ export function AdminCategoriesPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </AdminLayout>
     );
 }
