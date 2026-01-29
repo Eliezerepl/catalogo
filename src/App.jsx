@@ -121,10 +121,15 @@ function Layout() {
 
                 {/* Actions */}
                 <div className="header-actions">
-                  <div className="header-action-btn">
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=5519935004003&text&type=phone_number&app_absent=0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="header-action-btn text-decoration-none"
+                  >
                     <HelpCircle size={24} />
                     <span>Atendimento</span>
-                  </div>
+                  </a>
                   <Link to="/login" className="header-action-btn text-decoration-none">
                     <User size={24} />
                     <span>Minha Conta</span>
