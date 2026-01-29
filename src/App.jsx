@@ -108,16 +108,27 @@ function Layout() {
                   <img src={logoImg} alt="Ardulimp Logo" className="logo-img" style={{ height: '50px' }} />
                 </Link>
 
-                {/* Search Bar */}
-                <div className="header-search">
-                  <input
-                    type="text"
-                    placeholder="O que deseja procurar?"
-                    className="header-search-input"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  <Search className="header-search-icon" size={20} />
+                {/* Search Bar Group */}
+                <div className="header-search-group">
+                  <select
+                    className="header-category-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    {CATEGORIES.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                  <div className="header-search">
+                    <input
+                      type="text"
+                      placeholder="O que deseja procurar?"
+                      className="header-search-input"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <Search className="header-search-icon" size={20} />
+                  </div>
                 </div>
 
                 {/* Actions */}
@@ -149,11 +160,7 @@ function Layout() {
             {/* Navigation Bar */}
             <div className="navbar">
               <div className="container navbar-content">
-                <div className="all-cats-btn" onClick={() => setSelectedCategory("Todos")} style={{ cursor: 'pointer' }}>
-                  <Menu size={24} />
-                  <span>Todas Categorias</span>
-                </div>
-
+                {/* Scrollable Nav Links Only */}
                 <div className="nav-links">
                   {CATEGORIES.map(cat => (
                     cat !== "Todos" && (
