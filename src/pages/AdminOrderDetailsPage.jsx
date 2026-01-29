@@ -10,8 +10,12 @@ import {
     MapPin,
     Truck,
     ShoppingBag,
-    Search
+    Search,
+    FileText,
+    CheckCircle
 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import { supabase } from '../lib/supabase';
 import { AdminLayout } from '../components/AdminLayout';
 
@@ -86,6 +90,71 @@ export function AdminOrderDetailsPage() {
     const updateOrderItems = (newItems) => {
         const newTotal = newItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
         setOrder({ ...order, items: newItems, total_amount: newTotal });
+    };
+
+    const handleApprove = async () => {
+        try {
+            setSaving(true);
+            const { error } = await supabase
+                .from('orders')
+                .update({ status: 'Aprovado' })
+                .eq('id', id);
+
+            if (error) throw error;
+            setOrder({ ...order, status: 'Aprovado' });
+            alert('Pedido aprovado com sucesso!');
+        } catch (error) {
+            alert('Erro ao aprovar: ' + error.message);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+
+        // Header
+        doc.setFontSize(22);
+        doc.setTextColor(0, 104, 55); // var(--primary)
+        doc.text("Casa & Limpeza Express", 105, 20, { align: "center" });
+
+        doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Pedido #${order.id}`, 105, 30, { align: "center" });
+
+        doc.setFontSize(10);
+        doc.text(`Data: ${new Date(order.created_at).toLocaleDateString('pt-BR')}`, 105, 38, { align: "center" });
+
+        // Customer Info
+        doc.setFontSize(14);
+        doc.text("Dados do Cliente", 14, 55);
+        doc.setFontSize(10);
+        doc.text(`Nome: ${order.customer_name}`, 14, 62);
+        doc.text(`Bairro: ${order.customer_neighborhood}`, 14, 67);
+        doc.text(`Entrega: ${order.delivery_type}`, 14, 72);
+        if (order.observations) {
+            doc.text(`Observações: ${order.observations}`, 14, 77);
+        }
+
+        // Table
+        const tableData = order.items.map(item => [
+            item.name,
+            item.qty,
+            `R$ ${item.price.toFixed(2)}`,
+            `R$ ${(item.price * item.qty).toFixed(2)}`
+        ]);
+
+        doc.autoTable({
+            startY: 85,
+            head: [['Produto', 'Qtd', 'Preço Unit.', 'Subtotal']],
+            body: tableData,
+            theme: 'grid',
+            headStyles: { fillStyle: 'solid', fillColor: [0, 104, 55] },
+            footStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0] },
+            foot: [['', '', 'TOTAL:', `R$ ${order.total_amount.toFixed(2)}`]]
+        });
+
+        doc.save(`Pedido_${order.id}_${order.customer_name}.pdf`);
     };
 
     const handleSave = async () => {
@@ -255,6 +324,27 @@ export function AdminOrderDetailsPage() {
                             >
                                 Sair sem salvar
                             </button>
+
+                            {order.status === 'Aprovado' && (
+                                <button
+                                    onClick={generatePDF}
+                                    className="px-6 py-2 bg-[#f39c12] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 transition-all"
+                                >
+                                    <FileText size={16} /> Gerar PDF do Pedido
+                                </button>
+                            )}
+
+                            {order.status !== 'Aprovado' && (
+                                <button
+                                    onClick={handleApprove}
+                                    disabled={saving}
+                                    className="px-6 py-2 bg-[#27ae60] text-white rounded text-sm font-bold shadow-sm flex items-center gap-2 hover:brightness-95 transition-all disabled:opacity-50"
+                                >
+                                    {saving ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle size={16} />}
+                                    Aprovar e Liberar PDF
+                                </button>
+                            )}
+
                             <button
                                 onClick={handleSave}
                                 disabled={saving}
