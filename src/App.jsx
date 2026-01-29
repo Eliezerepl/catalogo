@@ -12,7 +12,9 @@ import { AdminOrderDetailsPage } from './pages/AdminOrderDetailsPage';
 import { LoginPage } from './pages/LoginPage';
 import { CATEGORIES } from './data';
 
-const STORE_NAME = "Casa & Limpeza Express";
+import logoImg from './assets/logo.png';
+
+const STORE_NAME = "Ardulimp";
 
 const ProtectedRoute = ({ children }) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -102,7 +104,7 @@ function Layout() {
               <div className="container header-content">
                 {/* Logo */}
                 <Link to="/" className="logo text-decoration-none">
-                  <span>bhb</span>
+                  <img src={logoImg} alt="Ardulimp Logo" className="logo-img" style={{ height: '50px' }} />
                 </Link>
 
                 {/* Search Bar */}

@@ -39,7 +39,7 @@ export function LoginPage() {
                         <User size={32} />
                     </div>
                     <h1>Área Restrita</h1>
-                    <p>Gerenciamento de Catálogo BHB</p>
+                    <p>Gerenciamento de Catálogo Ardulimp</p>
                 </div>
 
                 {error && (

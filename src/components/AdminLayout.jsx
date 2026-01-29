@@ -13,6 +13,7 @@ import {
     Search
 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import logoImg from '../assets/logo.png';
 
 export function AdminLayout({ children, title = "Painel" }) {
     const navigate = useNavigate();
@@ -28,10 +29,8 @@ export function AdminLayout({ children, title = "Painel" }) {
             {/* Sidebar Consistente */}
             <aside className="admin-sidebar">
                 <div className="sidebar-header">
-                    <div className="admin-logo-img">
-                        <ShoppingBag size={20} />
-                    </div>
-                    <span className="admin-logo-text">ADMIN BHB</span>
+                    <img src={logoImg} alt="Ardulimp" style={{ height: '32px', marginRight: '10px' }} />
+                    <span className="admin-logo-text">ADMIN ARDULIMP</span>
                 </div>
 
                 <div className="sidebar-search-container">

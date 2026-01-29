@@ -135,8 +135,8 @@ export function AdminOrderDetailsPage() {
             console.log("Instância jsPDF criada. Adicionando cabeçalho...");
             // Header
             doc.setFontSize(22);
-            doc.setTextColor(0, 104, 55); // var(--primary)
-            doc.text("Casa & Limpeza Express", 105, 20, { align: "center" });
+            doc.setTextColor(50, 168, 82); // #32a852 (Primary Verde Ardulimp)
+            doc.text("Ardulimp", 105, 20, { align: "center" });
 
             doc.setFontSize(16);
             doc.setTextColor(0, 0, 0);
@@ -172,7 +172,7 @@ export function AdminOrderDetailsPage() {
                 head: [['Produto', 'Qtd', 'Preço Unit.', 'Subtotal']],
                 body: tableData,
                 theme: 'grid',
-                headStyles: { fillStyle: 'solid', fillColor: [0, 104, 55] },
+                headStyles: { fillStyle: 'solid', fillColor: [50, 168, 82] }, // #32a852
                 footStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0] },
                 foot: [['', '', 'TOTAL:', `R$ ${Number(order.total_amount).toFixed(2)}`]]
             });

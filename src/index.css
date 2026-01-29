@@ -1,10 +1,10 @@
 :root {
-  --primary: #006837;
-  /* Verde BHB */
-  --primary-dark: #004d29;
-  --primary-light: #e6f0eb;
-  --secondary: #d97706;
-  /* Laranja/Amarelo */
+  --primary: #32a852;
+  /* Verde Ardulimp */
+  --primary-dark: #247e3d;
+  --primary-light: #e9f5ed;
+  --secondary: #009ee3;
+  /* Azul Ardulimp */
   --background: #f8fafc;
   --card-bg: #ffffff;
   --text-main: #1e293b;

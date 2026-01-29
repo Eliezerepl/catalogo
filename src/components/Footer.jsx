@@ -12,6 +12,7 @@ import {
     Truck
 } from 'lucide-react';
 import { CATEGORIES } from '../data';
+import logoImg from '../assets/logo.png';
 
 export function Footer() {
     return (
@@ -21,7 +22,7 @@ export function Footer() {
                     {/* Brand Section */}
                     <div className="footer-brand">
                         <Link to="/" className="logo footer-logo">
-                            <span>bhb</span>
+                            <img src={logoImg} alt="Ardulimp Logo" className="logo-img" style={{ height: '40px' }} />
                         </Link>
                         <p className="footer-desc">
                             Especialistas em soluções de limpeza e organização para sua casa ou empresa.
@@ -72,11 +73,11 @@ export function Footer() {
                         </div>
                         <div className="contact-item">
                             <Phone size={18} className="text-primary" />
-                            <span>(11) 99999-9999</span>
+                            <span>(19) 93500-4003</span>
                         </div>
                         <div className="contact-item">
                             <Mail size={18} className="text-primary" />
-                            <span>contato@bhblimpeza.com.br</span>
+                            <span>contato@ardulimp.com.br</span>
                         </div>
                     </div>
                 </div>
@@ -106,7 +107,7 @@ export function Footer() {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} BHB Casa & Limpeza. Todos os direitos reservados.</p>
+                    <p>&copy; {new Date().getFullYear()} Ardulimp. Todos os direitos reservados.</p>
                     <div className="footer-bottom-links">
                         <a href="#">Privacidade</a>
                         <a href="#">Termos de Uso</a>
