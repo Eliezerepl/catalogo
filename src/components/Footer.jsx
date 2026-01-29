@@ -69,7 +69,7 @@ export function Footer() {
                         <h4 className="footer-title">Contato</h4>
                         <div className="contact-item">
                             <MapPin size={18} className="text-primary" />
-                            <span>Rua Exemplo, 123 - Centro<br />São Paulo - SP</span>
+                            <span>Av. Padre Antônio Vann Ess, 833.<br />Em frente a rodoviária.</span>
                         </div>
                         <div className="contact-item">
                             <Phone size={18} className="text-primary" />
