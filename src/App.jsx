@@ -96,7 +96,7 @@ function Layout() {
       {/* Header Complexo - Escondido no Login e Admin */}
       {!location.pathname.startsWith('/admin') && location.pathname !== '/login' && (
         <>
-          <header className="header">
+          <header className={`header ${location.pathname === '/carrinho' ? 'is-cart-page' : ''}`}>
             {/* ... (conteúdo do header existente) ... */}
             <div className="header-top">
               <div className="container header-content">
@@ -141,7 +141,7 @@ function Layout() {
             {/* Navigation Bar */}
             <div className="navbar">
               <div className="container navbar-content">
-                <div className="all-cats-btn">
+                <div className="all-cats-btn" onClick={() => setSelectedCategory("Todos")} style={{ cursor: 'pointer' }}>
                   <Menu size={24} />
                   <span>Todas Categorias</span>
                 </div>

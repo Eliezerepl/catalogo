@@ -4,7 +4,7 @@ import { Minus, Plus, Trash2, MessageCircle, ArrowLeft, ShoppingCart, Loader2 } 
 import { useCart } from '../context/CartContext';
 import { supabase } from '../lib/supabase';
 
-const WHATSAPP_NUMBER = "5511999999999";
+const WHATSAPP_NUMBER = "5519935004003";
 
 export function CartPage() {
     const { cart, updateQty, removeFromCart, cartTotalItems, clearCart } = useCart();
@@ -175,7 +175,7 @@ Observações: ${checkoutForm.obs}`;
                                     <input
                                         type="text"
                                         className="form-input w-full"
-                                        placeholder="Digite seu bairro"
+                                        placeholder="Seu bairro aqui"
                                         value={checkoutForm.neighborhood}
                                         onChange={e => setCheckoutForm({ ...checkoutForm, neighborhood: e.target.value })}
                                     />
