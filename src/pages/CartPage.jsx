@@ -17,6 +17,10 @@ export function CartPage() {
         obs: ""
     });
 
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const handleCheckout = async () => {
         if (!checkoutForm.name || !checkoutForm.neighborhood) {
             alert("Por favor, preencha Nome e Bairro.");
