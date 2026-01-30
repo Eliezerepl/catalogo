@@ -407,6 +407,7 @@ button {
   margin-bottom: 1rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -2764,8 +2765,8 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .login-card {
-    padding: 1.5rem;
+  .cart-page {
+    padding-bottom: 5rem;
   }
 }
 
