@@ -24,12 +24,28 @@ const ProtectedRoute = ({ children }) => {
   return isAdmin ? children : <Navigate to="/login" replace />;
 };
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function Layout() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [categories, setCategories] = useState(["Todos"]);
   const { cart, updateQty, removeFromCart, cartTotalItems, isDrawerOpen, closeDrawer, openDrawer } = useCart();
   const location = useLocation();
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isDrawerOpen]);
 
   useEffect(() => {
     const fetchCats = async () => {
@@ -225,6 +241,7 @@ function App() {
 function RouterWrapper() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <CartProvider>
         <Routes>
           <Route element={<Layout />}>
