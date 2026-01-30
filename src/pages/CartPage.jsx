@@ -51,24 +51,22 @@ export function CartPage() {
 
             // 2. Prepara mensagem do WhatsApp
             const itemsList = cart.map(item =>
-                `${item.qty}x ${item.name} (${item.unit})`
+                `• *${item.qty}x ${item.name}* (${item.unit})`
             ).join('\n');
 
-            const message = `Olá! Gostaria de confirmar meu pedido #${order.id}.
-Nome: ${checkoutForm.name}
-Bairro: ${checkoutForm.neighborhood}
-Retirada/Entrega: ${checkoutForm.deliveryType}
-
-Itens:
-${itemsList}
-
-Total: R$ ${totalAmount.toFixed(2)}
-Observações: ${checkoutForm.obs}`;
+            const message = `*NOVO PEDIDO #${order.id}*\n\n` +
+                `*Nome:* ${checkoutForm.name}\n` +
+                `*Bairro:* ${checkoutForm.neighborhood}\n` +
+                `*Entrega:* ${checkoutForm.deliveryType}\n\n` +
+                `*Itens:*\n${itemsList}\n\n` +
+                `*Total:* R$ ${totalAmount.toFixed(2).replace('.', ',')}\n\n` +
+                `*Observações:* ${checkoutForm.obs || 'Nenhuma'}`;
 
             // 3. Limpa o carrinho e redireciona direto
             clearCart();
-            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.location.href = url;
+            const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            window.location.href = '/'; // Redireciona para home após abrir whatsapp
 
         } catch (error) {
             console.error('Erro ao processar pedido:', error);
@@ -126,7 +124,7 @@ Observações: ${checkoutForm.obs}`;
                                             <Trash2 size={14} /> Remover
                                         </button>
                                         <div className="font-bold text-primary">
-                                            R$ {(item.price * item.qty).toFixed(2)}
+                                            R$ {(item.price * item.qty).toFixed(2).replace('.', ',')}
                                         </div>
                                     </div>
                                 </div>
@@ -205,17 +203,37 @@ Observações: ${checkoutForm.obs}`;
                                 </div>
 
                                 <div className="pt-4 border-t border-gray-100 mt-4">
-                                    <p className="font-bold text-lg mb-4">Resumo</p>
-                                    <div className="flex justify-between mb-4 text-gray-600">
-                                        <span>Itens:</span>
-                                        <span>{cartTotalItems}</span>
+                                    <p className="font-bold text-lg mb-4">Resumo do Pedido</p>
+                                    <div className="space-y-3 mb-6">
+                                        {cart.map(item => (
+                                            <div key={item.id} className="flex justify-between items-start text-sm">
+                                                <div className="flex-1">
+                                                    <span className="font-bold">{item.qty}x</span> {item.name}
+                                                </div>
+                                                <span className="font-semibold ml-4">
+                                                    R$ {(item.price * item.qty).toFixed(2).replace('.', ',')}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="flex justify-between mb-4 text-gray-600 bg-gray-50 p-3 rounded-lg">
+                                        <span className="font-bold">Total Final:</span>
+                                        <span className="font-bold text-primary text-xl">
+                                            R$ {cart.reduce((acc, item) => acc + (item.price * item.qty), 0).toFixed(2).replace('.', ',')}
+                                        </span>
                                     </div>
                                     <button
                                         className="btn-whatsapp w-full justify-center"
                                         onClick={handleCheckout}
-                                        disabled={!checkoutForm.name || !checkoutForm.neighborhood}
+                                        disabled={!checkoutForm.name || !checkoutForm.neighborhood || isSaving}
                                     >
-                                        <MessageCircle size={20} /> Enviar Pedido no WhatsApp
+                                        {isSaving ? (
+                                            <Loader2 className="animate-spin" size={20} />
+                                        ) : (
+                                            <>
+                                                <MessageCircle size={20} /> Enviar Pedido no WhatsApp
+                                            </>
+                                        )}
                                     </button>
                                 </div>
                             </div>
